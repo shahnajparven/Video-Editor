@@ -1,8 +1,25 @@
-# React + Vite
+# Getting Started
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Developer Experience
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Reactjs
+- Material UI
+
+
+## Project setup for `Development`
+
+1. We will use `yarn` as our package manager. So, install it by running the `command` bellow.
+
+```bash
+npm i -g yarn
+# if not work then run
+sudo npm i -g yarn
+```
+
+2. Install `eslint` and `prettier` extension in your `vscode`.
+
+
+3. Go to the project directory `video editor` and run `yarn` then `yarn prepare`.
+
+6. Finally run `yarn dev` to start the dev server.
