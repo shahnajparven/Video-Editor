@@ -11,6 +11,7 @@ function RightComponent({color,hexColor,showPicker,showSketchPicker,handleColorC
 
   return (
     <>
+    
       <Box className="right_side">
         <Box
           sx={{
