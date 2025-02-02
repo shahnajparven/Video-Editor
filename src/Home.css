@@ -1,0 +1,130 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+/* .css-ptdwpq-MuiPaper-root-MuiAppBar-root{
+  background-color: red!important;
+} */
+
+.css-4raej3-MuiDrawer-docked .MuiDrawer-paper,.css-1lwhjos-MuiPaper-root-MuiDrawer-paper{
+  position: inherit!important;
+
+}
+.MuiDrawer-root{
+  position: inherit!important;
+  height: 90vh; 
+}
+
+.header{
+   padding: 5px 20px;
+   position:'fixed';
+   height:50px;
+   width:'100%';
+   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.right_side{
+  padding: 20px 10px;
+  width: 100%;
+
+}
+.main_content{
+  width: 100%;
+  padding: 5px;
+  margin: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid gray;
+  border-radius: 5px;
+}
+.video_box{
+  height: 100%;
+  width: 85%; 
+  /* background: black; */
+  padding: 5px;
+  margin: 5px;
+  border: 5px solid #ddd;
+}
+.drawer{
+  position: relative;
+}
+.dashboard_box,.FontDownloadIcon_box,.Image_box,.VolumeUp_box,.Videocam_box,.Delete_box,.List_box,.Send_box,.CameraAlt_box,.PermMedia_box,.SwapHorizontalCirclen_box{
+  position: absolute;
+  top: 50px;
+  left: 65px;
+  height: 91vh;
+  width: 300px;
+  border: 1px solif gray;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+.layout_name:hover {
+  border-bottom: 1px solid #121A5E;
+}
+.accordian{
+height: 30px;
+}
+.css-1f1pi2l-MuiButtonBase-root-MuiAccordionSummary-root{
+  min-height: 20px!important;
+
+}
+.css-yfrx4k-MuiAccordionSummary-content{
+  margin:0px!important;
+
+}
+.css-1808mag-MuiPaper-root-MuiAccordion-root{
+  box-shadow: none!important;
+  border: 1px solid #ddd;
+}
+.logo{
+  height: 60px;
+  width: 120px;
+padding: 5px;
+}
+.logo img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.select_list{
+  text-align: start!important;
+  font-size: 14px;
+  padding: 8px 2px;
+}
+.select_input>input{
+  padding: 8px 5px;
+  width: 100%;
+  border-radius: 2px;
+  border:1px solid #ccc!important;
+  outline: none!important;
+}
+.right_part_input input{
+  padding: 8px 5px;
+  width: 100%;
+  border-radius: 2px;
+  border:1px solid #ccc!important;
+  outline: none!important;
+}
+.upload_button,.remove_button{
+padding: 8px;
+width: 50%;
+background-color: #fff!important;
+}
+.upload_button{
+  border: 1px solid gray;
+  color: gray;
+}
+.remove_button{
+  border: 1px solid #F03434;
+  color: #F03434;
+  }
