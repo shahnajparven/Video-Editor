@@ -372,7 +372,7 @@ export default function MiniDrawer({videoBoxColor}) {
 
         <Box className="main_content">
           <Box className="video_box"   style={{...videoBoxs,backgroundColor:videoBoxColor}}>
-            Video
+           
           </Box>
         </Box>
       </Box>
