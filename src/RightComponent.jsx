@@ -1,12 +1,13 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Typography } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Checkbox, Typography } from "@mui/material";
 import { SketchPicker } from "react-color";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import CloseIcon from '@mui/icons-material/Close';
 import UploadIcon from '@mui/icons-material/Upload';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import SendIcon from "@mui/icons-material/Send";
+
+
 function RightComponent({color,hexColor,showPicker,showSketchPicker,handleColorChange}) {
- 
 
   return (
     <>
