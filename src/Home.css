@@ -67,7 +67,7 @@ top:50px;
 left: 0px;
 }
 .css-3pzm2w{
-  height: 30px;
+  height: 50px!important;
 }
 
 .hide {
@@ -81,7 +81,7 @@ left: 0px;
   border-bottom: 1px solid #121A5E;
 }
 .accordian{
-height: 30px;
+height: 30px!important;
 }
 .css-1f1pi2l-MuiButtonBase-root-MuiAccordionSummary-root{
   min-height: 20px!important;
