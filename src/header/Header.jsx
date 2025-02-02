@@ -38,7 +38,7 @@ export const Header = () => {
   };
 
   return (
-    <Box class="header">
+    <Box className="header">
       <Box
         sx={{
           width: "100%",
@@ -82,7 +82,7 @@ export const Header = () => {
           }}
           
           >
-            <Box class='layout_name'>
+            <Box className='layout_name'>
           <SellIcon sx={{fontSize:'14px',color:'#121A5E'}}/>
           <Typography variant="span" sx={{fontSize:'14px',padding:'0px 5px',color:'#121A5E',cursor:'pointer'}}>"Untitled 2025-02-01 12:43:21"</Typography>
           </Box>
@@ -113,7 +113,7 @@ export const Header = () => {
           </Box>
        
         </Box>
-        <Box class='logo'>
+        <Box className='logo'>
           <img src={logo} alt="logo" />
         </Box>
         <Box
@@ -133,7 +133,7 @@ export const Header = () => {
             textAlign: "center",
             justifyContent: "center",
           }}>
-          <Box class='accordian'>
+          <Box className='accordian'>
 
       <Accordion>
         <AccordionSummary
@@ -144,12 +144,12 @@ export const Header = () => {
           <Typography component="span" sx={{fontSize:'14px',padding:'5px 5px',color:'gray',cursor:'pointer'}}> Untitled 2025-02-01 12:43:21</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Box class='select_input'><input type="text" /></Box>
+          <Box className='select_input'><input type="text" /></Box>
           <Box sx={{display:'flex',gap:'5px',textAlign:'start!important'}}><Checkbox  size="small" sx={{p:'0px!important'}} /> <Typography class='select_list'>My Layouts</Typography></Box>
-          <Box class='select_list'>Default Layout</Box>
-          <Box class='select_list'>Untitled 2025-02-01 12:43:21</Box>
-          <Box class='select_list'>Untitled 2025-02-02 12:43:22</Box>
-          <Box class='select_list'>Untitled 2025-02-03 12:43:29</Box>
+          <Box className='select_list'>Default Layout</Box>
+          <Box className='select_list'>Untitled 2025-02-01 12:43:21</Box>
+          <Box className='select_list'>Untitled 2025-02-02 12:43:22</Box>
+          <Box className='select_list'>Untitled 2025-02-03 12:43:29</Box>
         </AccordionDetails>
       </Accordion>
     </Box>
