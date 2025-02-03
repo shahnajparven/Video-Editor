@@ -358,10 +358,10 @@ export default function MiniDrawer({videoBoxColor}) {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
-        <Drawer variant="permanent" open={open} className={open ? 'drawerOpen' : 'drawerClosed'}
-        classes={{
-          paper: 'drawerPaper',
-        }}>
+        <Drawer
+         variant="permanent" open={open} 
+        
+        >
           {/* Dashboard Icon */}
           <Box>
             <IconButton onClick={handleDrawerOpen}>

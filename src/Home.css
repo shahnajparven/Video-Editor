@@ -7,12 +7,12 @@
   background-color: red!important;
 } */
 
-.css-4raej3-MuiDrawer-docked .MuiDrawer-paper,.css-1lwhjos-MuiPaper-root-MuiDrawer-paper{
+/* .css-4raej3-MuiDrawer-docked .MuiDrawer-paper,.css-1lwhjos-MuiPaper-root-MuiDrawer-paper{
   position: sticky!important;
   top: 50px;
   left: 0px;
   height: 80vh; 
-}
+} */
 /* .MuiDrawer-root{
   position: sticky!important;
   top: 50px;
@@ -76,12 +76,11 @@
   justify-content: flex-end;
   align-items: flex-start;
 }
-.drawerClosed{
-  background-color: red!important;
-}
-.drawerPaper {
-  background-color: red;
-  color: #333;
+.MuiPaper-root  {
+  height: 70vh!important; /* Full height */
+  position: fixed!important; /* Make it fixed */
+  top: 50px!important; /* Align to the top of the screen */
+  left: 0!important; /* Align to the left of the screen */
 }
 .dashboard_box,.FontDownloadIcon_box,.Image_box,.VolumeUp_box,.Videocam_box,.Delete_box,.List_box,.Send_box,.CameraAlt_box,.PermMedia_box,.SwapHorizontalCirclen_box{
   position: absolute;
