@@ -76,20 +76,26 @@
   justify-content: flex-end;
   align-items: flex-start;
 }
-/* .MuiPaper-root  {
-  height: 82vh!important;
-  position: sticky!important;
-  top: 50px!important;
-  left: 0;
+ .drawer_items{
+  position: fixed;
+  width: 60px;
+  height: 80vh;
   overflow-y: auto;
-} */
+  scrollbar-width: thin;
+ }
 .dashboard_box,.FontDownloadIcon_box,.Image_box,.VolumeUp_box,.Videocam_box,.Delete_box,.List_box,.Send_box,.CameraAlt_box,.PermMedia_box,.SwapHorizontalCirclen_box{
   position: absolute;
   top: 50px;
   left: 65px;
-  height: 91vh;
+  height: 90vh;
   width: 300px;
   border: 1px solif gray;
+
+}
+.test{
+
+  background-color: red;
+  overflow-y: auto;
 }
 .hide {
   display: none;
@@ -101,12 +107,15 @@
 .layout_name:hover {
   border-bottom: 1px solid #121A5E;
 }
-.accordian{
+/* .accordian{
 height: 30px;
-}
-.css-1f1pi2l-MuiButtonBase-root-MuiAccordionSummary-root{
+} */
+/* .css-1f1pi2l-MuiButtonBase-root-MuiAccordionSummary-root{
   min-height: 20px!important;
 
+} */
+#panel2-header{
+  min-height: 20px!important;
 }
 .css-yfrx4k-MuiAccordionSummary-content{
   margin:0px!important;

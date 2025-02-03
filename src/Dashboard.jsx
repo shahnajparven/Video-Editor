@@ -366,20 +366,277 @@ export default function MiniDrawer({videoBoxColor}) {
           position: "sticky", 
           top: "50px", 
           left: "0",
-          height: "82vh",
+         
           zIndex: 1300,
           "& .MuiDrawer-paper": {
-            height: "82vh", 
-           
-            position: "sticky",
+         
+           overflow:'none',
+            position: "fixed",
             top: "50px", 
             left: "0",
             borderRight: "2px solid #ddd", 
           },
         }}
         >
-          {/* Dashboard Icon */}
           <Box>
+          <Box className='drawer_items'>
+        {/* Dashboard Icon */}
+          <Box>
+            <IconButton onClick={handleDrawerOpen}>
+              <WindowIcon sx={{ fontSize: "28px", margin: "5px 0px" }} />
+            </IconButton>
+     
+          </Box>
+          {/* Font Download Icon */}
+          <Box>
+            <IconButton onClick={handleDrawerOpenFontDownloadIcon}>
+              <FontDownloadIcon sx={{ fontSize: "28px", margin: "5px 0px" }} />
+            </IconButton>
+           
+          </Box>
+          {/* Image Icon  */}
+          <Box>
+            <IconButton>
+              <ImageIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenImageIcon}
+              />
+            </IconButton>
+            
+          </Box>
+          {/* VolumeUp Icon  */}
+          <Box>
+            <IconButton>
+              <VolumeUpIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenVolumeUpIcon}
+              />
+            </IconButton>
+            
+          </Box>
+          {/* Videocam Icon  */}
+          <Box>
+            <IconButton>
+              <VideocamIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenVideocamIcon}
+              />
+            </IconButton>
+            
+          </Box>
+          {/* Delete Icon  */}
+          <Box>
+            <IconButton>
+              <DeleteIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenDeleteIcon}
+              />
+            </IconButton>
+            
+          </Box>
+          {/* List Icon  */}
+          <Box>
+            <IconButton>
+              <ListIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenListIcon}
+              />
+            </IconButton>
+            
+          </Box>
+          {/* Send Icon  */}
+          <Box>
+            <IconButton>
+              <SendIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenSendIcon}
+              />
+            </IconButton>
+            
+          </Box>
+          {/* Camera Icon  */}
+          <Box>
+            <IconButton>
+              <CameraAltIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenCameraAltIcon}
+              />
+            </IconButton>
+           
+          </Box>
+          {/* PermMedia Icon  */}
+          <Box>
+            <IconButton>
+              <PermMediaIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenPermMediaIcon}
+              />
+            </IconButton>
+            
+          </Box>
+          {/* SwapHorizontalCircle Icon  */}
+          <Box>
+            <IconButton>
+              <SwapHorizontalCircleIcon
+                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                onClick={handleDrawerOpenSwapHorizontalCircleIcon}
+              />
+            </IconButton>
+            
+          </Box>
+          </Box>
+          <Box
+              className={`dashboard_box ${activeContent === "dashboard" ? "show" : "hide"}`}
+            >
+             
+              Dashboard
+              <Box className='test'>
+
+              <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+              </Box>
+            </Box>
+            <Box
+              className={`FontDownloadIcon_box ${activeContent === "fontDownload" ? "show" : "hide"}`}
+            >
+              fontDownload
+            </Box>
+            <Box
+              className={`Image_box ${activeContent === "Image" ? "show" : "hide"}`}
+            >
+              Image
+            </Box>
+            <Box
+              className={`VolumeUp_box ${activeContent === "VolumeUp" ? "show" : "hide"}`}
+            >
+              VolumeUp
+            </Box>
+            <Box
+              className={`Videocam_box ${activeContent === "Videocam" ? "show" : "hide"}`}
+            >
+              Videocam
+            </Box>
+            <Box
+              className={`Delete_box ${activeContent === "Delete" ? "show" : "hide"}`}
+            >
+              Delete
+            </Box>
+            <Box
+              className={`List_box ${activeContent === "List" ? "show" : "hide"}`}
+            >
+              List
+            </Box>
+            <Box
+              className={`Send_box ${activeContent === "Send" ? "show" : "hide"}`}
+            >
+              Send
+            </Box>
+            <Box
+              className={`CameraAlt_box ${activeContent === "CameraAlt" ? "show" : "hide"}`}
+            >
+              CameraAlt
+            </Box>
+            <Box
+              className={`PermMedia_box ${activeContent === "PermMedia" ? "show" : "hide"}`}
+            >
+              PermMedia
+            </Box>
+            <Box
+              className={`SwapHorizontalCirclen_box ${activeContent === "SwapHorizontalCirclen" ? "show" : "hide"}`}
+            >
+              SwapHorizontalCirclen
+            </Box>
+          </Box>
+          {/* Dashboard Icon */}
+          {/* <Box>
             <IconButton onClick={handleDrawerOpen}>
               <WindowIcon sx={{ fontSize: "28px", margin: "5px 0px" }} />
             </IconButton>
@@ -388,9 +645,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               Dashboard
             </Box>
-          </Box>
+          </Box> */}
           {/* Font Download Icon */}
-          <Box>
+          {/* <Box>
             <IconButton onClick={handleDrawerOpenFontDownloadIcon}>
               <FontDownloadIcon sx={{ fontSize: "28px", margin: "5px 0px" }} />
             </IconButton>
@@ -399,9 +656,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               fontDownload
             </Box>
-          </Box>
+          </Box> */}
           {/* Image Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <ImageIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -413,9 +670,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               Image
             </Box>
-          </Box>
+          </Box> */}
           {/* VolumeUp Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <VolumeUpIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -427,9 +684,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               VolumeUp
             </Box>
-          </Box>
+          </Box> */}
           {/* Videocam Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <VideocamIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -441,9 +698,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               Videocam
             </Box>
-          </Box>
+          </Box> */}
           {/* Delete Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <DeleteIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -455,9 +712,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               Delete
             </Box>
-          </Box>
+          </Box> */}
           {/* List Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <ListIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -469,9 +726,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               List
             </Box>
-          </Box>
+          </Box> */}
           {/* Send Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <SendIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -483,9 +740,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               Send
             </Box>
-          </Box>
+          </Box> */}
           {/* Camera Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <CameraAltIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -497,9 +754,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               CameraAlt
             </Box>
-          </Box>
+          </Box> */}
           {/* PermMedia Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <PermMediaIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -511,9 +768,9 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               PermMedia
             </Box>
-          </Box>
+          </Box> */}
           {/* SwapHorizontalCircle Icon  */}
-          <Box>
+          {/* <Box>
             <IconButton>
               <SwapHorizontalCircleIcon
                 sx={{ fontSize: "28px", margin: "5px 0px" }}
@@ -525,7 +782,7 @@ export default function MiniDrawer({videoBoxColor}) {
             >
               SwapHorizontalCirclen
             </Box>
-          </Box>
+          </Box> */}
         </Drawer>
 
         <Box className="main_content">
