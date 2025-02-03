@@ -1,7 +1,8 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
+// import MuiDrawer from "@mui/material/Drawer";
+import { Drawer as MuiDrawer } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -360,7 +361,22 @@ export default function MiniDrawer({videoBoxColor}) {
 
         <Drawer
          variant="permanent" open={open} 
-        
+         sx={{
+          
+          position: "sticky", 
+          top: "50px", 
+          left: "0",
+          height: "82vh",
+          zIndex: 1300,
+          "& .MuiDrawer-paper": {
+            height: "82vh", 
+           
+            position: "sticky",
+            top: "50px", 
+            left: "0",
+            borderRight: "2px solid #ddd", 
+          },
+        }}
         >
           {/* Dashboard Icon */}
           <Box>
