@@ -6,11 +6,13 @@
 /* .css-ptdwpq-MuiPaper-root-MuiAppBar-root{
   background-color: red!important;
 } */
-/* 
-.css-4raej3-MuiDrawer-docked .MuiDrawer-paper,.css-1lwhjos-MuiPaper-root-MuiDrawer-paper{
-  position: inherit!important;
 
-} */
+.css-4raej3-MuiDrawer-docked .MuiDrawer-paper,.css-1lwhjos-MuiPaper-root-MuiDrawer-paper{
+  position: sticky!important;
+  top: 50px;
+  left: 0px;
+  height: 80vh; 
+}
 /* .MuiDrawer-root{
   position: sticky!important;
   top: 50px;
