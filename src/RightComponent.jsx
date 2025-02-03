@@ -26,7 +26,7 @@ const [activeDiv, setActiveDiv] = useState(1);
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-               borderBottom:'1px solid #121A5E'  ,   
+               borderBottom:'1px solid #6874dd'  ,   
             marginBottom: "20px",
           }}
         >
@@ -37,16 +37,16 @@ const [activeDiv, setActiveDiv] = useState(1);
               textAlign: "center",
               fontSize: "14px",
               fontWeight: "bold",
-              color: "#121A5E",
+              color: "#6874dd",
               padding:'2px',
             cursor:'pointer'
             }}
-            style={{borderBottom: activeDiv === 1 ? '4px solid #121A5E' : 'none'}}
+            style={{borderBottom: activeDiv === 1 ? '4px solid #6874dd' : 'none'}}
             onClick={() => handleCollapseClick(1)}
           >
             General
           </Box>
-          <Box   onClick={() => handleCollapseClick(2)} sx={{ width: "100%", textAlign: "center", color: "#121A5E",  cursor:'pointer'}} style={{borderBottom: activeDiv === 2 ? '4px solid #121A5E' : 'none'}}>
+          <Box   onClick={() => handleCollapseClick(2)} sx={{ width: "100%", textAlign: "center", color: "#6874dd",  cursor:'pointer'}} style={{borderBottom: activeDiv === 2 ? '4px solid #6874dd' : 'none'}}>
             <SendIcon fontSize="20px" />
           </Box>
         </Box>
@@ -136,7 +136,7 @@ const [activeDiv, setActiveDiv] = useState(1);
         <Box className='right_part_input'><input type="number" value={0}/></Box>
         </Box>
 
-        <Box sx={{display:'flex',gap:'5px',textAlign:'start!important',margin:'10px 0px'}}><Checkbox  size="small" sx={{p:'0px!important'}} /> 
+        <Box sx={{display:'flex',gap:'5px',alignItems:'center', textAlign:'center',margin:'10px 0px'}}><Checkbox  size="small" sx={{p:'0px!important'}} /> 
         <Typography fontSize={'14px'} fontWeight={'bold'}>Automatically apply Transitions?
         </Typography>
         </Box>
@@ -151,7 +151,7 @@ const [activeDiv, setActiveDiv] = useState(1);
             {" "}
             Layout Actions
           </Typography>
-        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        <Box padding={2} border={'1px dashed #6874dd'} textAlign='center'>No actions to show</Box>
         </Box>
 
         <Box marginTop={2}>
@@ -161,7 +161,7 @@ const [activeDiv, setActiveDiv] = useState(1);
             {" "}
             Other Actions
           </Typography>
-        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        <Box padding={2} border={'1px dashed #6874dd'} textAlign='center'>No actions to show</Box>
         </Box>
           </Box>
     

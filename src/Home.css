@@ -40,10 +40,10 @@
 .main_content{
   width: 100%;
   height: 100%;
-  /* padding: 5px; */
-  margin: 15px;
+   padding: 10px; 
+  margin: 10px;
   align-items: center;
-  border: 2px solid gray;
+  border: 2px solid #6874dd;
   border-radius: 5px;
 }
 .video_content{
@@ -56,7 +56,7 @@
   height: 70vh;
   width: 99%; 
   margin: 5px;
-  border: 5px solid #ddd;
+  border: 5px solid #6874dd;
   order: 2!important;
 }
 .left_video_icon_box{
@@ -82,6 +82,7 @@
   height: 80vh;
   overflow-y: auto;
   scrollbar-width: thin;
+  background-color: #121A5E;
  }
 .dashboard_box,.FontDownloadIcon_box,.Image_box,.VolumeUp_box,.Videocam_box,.Delete_box,.List_box,.Send_box,.CameraAlt_box,.PermMedia_box,.SwapHorizontalCirclen_box{
   position: absolute;
@@ -93,8 +94,7 @@
 
 }
 .test{
-
-  background-color: red;
+  background-color: #fff;
   overflow-y: auto;
 }
 .hide {
@@ -135,11 +135,6 @@ height: 30px;
   z-index :9999999999;
   border: 1px solid #ddd;
 }
-.accordion_details2{
-  background-color: #fff!important;
-  z-index :9999999999!important;
-  border: 1px solid #ddd;
-}
 .logo{
   height: 60px;
   width: 120px;
@@ -172,13 +167,16 @@ padding: 5px;
 .upload_button,.remove_button{
 padding: 8px;
 width: 50%;
-background-color: #fff!important;
+cursor: pointer;
+/* background-color: #fff!important; */
 }
 .upload_button{
-  border: 1px solid gray;
-  color: gray;
+ border: 1px solid #6874dd;
+  color: #fff;
+  background: #6874dd!important;
 }
 .remove_button{
-  border: 1px solid #F03434;
-  color: #F03434;
+  border: 1px solid #d56161;
+  color: #fff;
+  background: #d56161!important;
   }

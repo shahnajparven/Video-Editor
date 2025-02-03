@@ -25,6 +25,8 @@ import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import LayersIcon from '@mui/icons-material/Layers';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
 
 const drawerWidth = 350;
 
@@ -383,14 +385,14 @@ export default function MiniDrawer({videoBoxColor}) {
         {/* Dashboard Icon */}
           <Box>
             <IconButton onClick={handleDrawerOpen}>
-              <WindowIcon sx={{ fontSize: "28px", margin: "5px 0px" }} />
+              <WindowIcon sx={{ fontSize: "28px", margin: "5px 0px" ,color: '#fff'}} />
             </IconButton>
      
           </Box>
           {/* Font Download Icon */}
           <Box>
             <IconButton onClick={handleDrawerOpenFontDownloadIcon}>
-              <FontDownloadIcon sx={{ fontSize: "28px", margin: "5px 0px" }} />
+              <FontDownloadIcon sx={{ fontSize: "28px", margin: "5px 0px" ,color: '#fff'}} />
             </IconButton>
            
           </Box>
@@ -398,7 +400,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <ImageIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px" ,color: '#fff'}}
                 onClick={handleDrawerOpenImageIcon}
               />
             </IconButton>
@@ -408,7 +410,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <VolumeUpIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px",color: '#fff' }}
                 onClick={handleDrawerOpenVolumeUpIcon}
               />
             </IconButton>
@@ -418,7 +420,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <VideocamIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px",color: '#fff' }}
                 onClick={handleDrawerOpenVideocamIcon}
               />
             </IconButton>
@@ -428,7 +430,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <DeleteIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px" ,color: '#fff'}}
                 onClick={handleDrawerOpenDeleteIcon}
               />
             </IconButton>
@@ -438,7 +440,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <ListIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px",color: '#fff' }}
                 onClick={handleDrawerOpenListIcon}
               />
             </IconButton>
@@ -448,7 +450,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <SendIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px" ,color: '#fff'}}
                 onClick={handleDrawerOpenSendIcon}
               />
             </IconButton>
@@ -458,7 +460,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <CameraAltIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px" ,color: '#fff'}}
                 onClick={handleDrawerOpenCameraAltIcon}
               />
             </IconButton>
@@ -468,7 +470,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <PermMediaIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px" ,color: '#fff'}}
                 onClick={handleDrawerOpenPermMediaIcon}
               />
             </IconButton>
@@ -478,7 +480,7 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box>
             <IconButton>
               <SwapHorizontalCircleIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
+                sx={{ fontSize: "28px", margin: "5px 0px" ,color: '#fff'}}
                 onClick={handleDrawerOpenSwapHorizontalCircleIcon}
               />
             </IconButton>
@@ -635,154 +637,7 @@ export default function MiniDrawer({videoBoxColor}) {
               SwapHorizontalCirclen
             </Box>
           </Box>
-          {/* Dashboard Icon */}
-          {/* <Box>
-            <IconButton onClick={handleDrawerOpen}>
-              <WindowIcon sx={{ fontSize: "28px", margin: "5px 0px" }} />
-            </IconButton>
-            <Box
-              className={`dashboard_box ${activeContent === "dashboard" ? "show" : "hide"}`}
-            >
-              Dashboard
-            </Box>
-          </Box> */}
-          {/* Font Download Icon */}
-          {/* <Box>
-            <IconButton onClick={handleDrawerOpenFontDownloadIcon}>
-              <FontDownloadIcon sx={{ fontSize: "28px", margin: "5px 0px" }} />
-            </IconButton>
-            <Box
-              className={`FontDownloadIcon_box ${activeContent === "fontDownload" ? "show" : "hide"}`}
-            >
-              fontDownload
-            </Box>
-          </Box> */}
-          {/* Image Icon  */}
-          {/* <Box>
-            <IconButton>
-              <ImageIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenImageIcon}
-              />
-            </IconButton>
-            <Box
-              className={`Image_box ${activeContent === "Image" ? "show" : "hide"}`}
-            >
-              Image
-            </Box>
-          </Box> */}
-          {/* VolumeUp Icon  */}
-          {/* <Box>
-            <IconButton>
-              <VolumeUpIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenVolumeUpIcon}
-              />
-            </IconButton>
-            <Box
-              className={`VolumeUp_box ${activeContent === "VolumeUp" ? "show" : "hide"}`}
-            >
-              VolumeUp
-            </Box>
-          </Box> */}
-          {/* Videocam Icon  */}
-          {/* <Box>
-            <IconButton>
-              <VideocamIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenVideocamIcon}
-              />
-            </IconButton>
-            <Box
-              className={`Videocam_box ${activeContent === "Videocam" ? "show" : "hide"}`}
-            >
-              Videocam
-            </Box>
-          </Box> */}
-          {/* Delete Icon  */}
-          {/* <Box>
-            <IconButton>
-              <DeleteIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenDeleteIcon}
-              />
-            </IconButton>
-            <Box
-              className={`Delete_box ${activeContent === "Delete" ? "show" : "hide"}`}
-            >
-              Delete
-            </Box>
-          </Box> */}
-          {/* List Icon  */}
-          {/* <Box>
-            <IconButton>
-              <ListIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenListIcon}
-              />
-            </IconButton>
-            <Box
-              className={`List_box ${activeContent === "List" ? "show" : "hide"}`}
-            >
-              List
-            </Box>
-          </Box> */}
-          {/* Send Icon  */}
-          {/* <Box>
-            <IconButton>
-              <SendIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenSendIcon}
-              />
-            </IconButton>
-            <Box
-              className={`Send_box ${activeContent === "Send" ? "show" : "hide"}`}
-            >
-              Send
-            </Box>
-          </Box> */}
-          {/* Camera Icon  */}
-          {/* <Box>
-            <IconButton>
-              <CameraAltIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenCameraAltIcon}
-              />
-            </IconButton>
-            <Box
-              className={`CameraAlt_box ${activeContent === "CameraAlt" ? "show" : "hide"}`}
-            >
-              CameraAlt
-            </Box>
-          </Box> */}
-          {/* PermMedia Icon  */}
-          {/* <Box>
-            <IconButton>
-              <PermMediaIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenPermMediaIcon}
-              />
-            </IconButton>
-            <Box
-              className={`PermMedia_box ${activeContent === "PermMedia" ? "show" : "hide"}`}
-            >
-              PermMedia
-            </Box>
-          </Box> */}
-          {/* SwapHorizontalCircle Icon  */}
-          {/* <Box>
-            <IconButton>
-              <SwapHorizontalCircleIcon
-                sx={{ fontSize: "28px", margin: "5px 0px" }}
-                onClick={handleDrawerOpenSwapHorizontalCircleIcon}
-              />
-            </IconButton>
-            <Box
-              className={`SwapHorizontalCirclen_box ${activeContent === "SwapHorizontalCirclen" ? "show" : "hide"}`}
-            >
-              SwapHorizontalCirclen
-            </Box>
-          </Box> */}
+         
         </Drawer>
 
         <Box className="main_content">
@@ -791,10 +646,16 @@ export default function MiniDrawer({videoBoxColor}) {
           <Box className="video_box" style={{...videocontents,backgroundColor:videoBoxColor}}></Box>
           <Box className='right_video_icon_box' style={videoBoxIconRight}><FullscreenIcon sx={{fontSize:"20px",color:'#121A5E'}}/></Box>
           </Box>
-          <Box sx={{height:'30px',width:'100%',bgcolor:'gray',padding:'5px'}}>
+          <Box sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <Box  sx={{display:'flex',justifyContent:'center',alignItems:'center'}}> <SkipPreviousIcon sx={{color:'#121A5E'}}/></Box>
+          <Box sx={{height:'25px',width:'25px',borderRadius:'100%',bgcolor:'#121A5E',margin:'8px',display:'flex',justifyContent:'center',alignItems:'center'}}><PlayArrowIcon sx={{fontSize:"16px",color:'#fff'}}/></Box>
+          <Box  sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>   <SkipNextIcon sx={{color:'#121A5E'}}/></Box>
+          </Box>
+          <Box sx={{height:'30px',width:'100%',bgcolor:'#6874dd',padding:'5px'}}>
          <Typography  variant='span' sx={{color:'#fff',fontSize:'14px',fontWeight:'bold'}}> Layout  </Typography> <Typography variant='span' sx={{color:'#fff',fontSize:'14px'}}> "Untitled 2025-02-01 12:43:21"</Typography>
           </Box>
-          <Box sx={{height:'15px',width:'15px',borderRadius:'100%',bgcolor:'#121A5E',margin:'8px 20px',display:'flex',justifyContent:'center',alignItems:'center'}}><PlayArrowIcon sx={{fontSize:"14px",color:'#fff'}}/></Box>
+         
+      
         </Box>
       </Box>
     </Box>
