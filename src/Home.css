@@ -11,12 +11,12 @@
   position: inherit!important;
 
 }
-.MuiDrawer-root{
+/* .MuiDrawer-root{
   position: sticky!important;
   top: 50px;
   left: 0px;
   height: 80vh; 
-}
+} */
 
 .header{
    padding: 5px 20px;
