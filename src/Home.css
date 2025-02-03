@@ -115,16 +115,23 @@ height: 30px;
 
 } */
 .accordian_summary{
-  min-height: 20px!important;
+  height: 30px!important;
 }
-.css-yfrx4k-MuiAccordionSummary-content{
+.MuiButtonBase-root{
+  min-height: 20px!important;
+  margin: 0px!important;
+} 
+.MuiAccordionSummary-content{
+  margin: 0px!important;
+}
+/* .css-yfrx4k-MuiAccordionSummary-content{
   margin:0px!important;
 
 }
 .css-1808mag-MuiPaper-root-MuiAccordion-root{
   box-shadow: none!important;
   border: 1px solid #ddd;
-}
+} */
 .logo{
   height: 60px;
   width: 120px;

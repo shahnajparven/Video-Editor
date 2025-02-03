@@ -135,12 +135,12 @@ export const Header = () => {
           }}>
           <Box className='accordian'>
 
-      <Accordion>
+      <Accordion className="accordian_summary">
         <AccordionSummary
           expandIcon={<ArrowDropDownIcon />}
           aria-controls="panel2-content"
           id="panel2-header"
-          className="accordian_summary"
+          className="accordian_summary2"
         >
           <Typography component="span" sx={{fontSize:'14px',padding:'5px 5px',color:'gray',cursor:'pointer'}}> Untitled 2025-02-01 12:43:21</Typography>
         </AccordionSummary>
