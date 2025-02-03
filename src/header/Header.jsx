@@ -144,7 +144,7 @@ export const Header = () => {
         >
           <Typography component="span" sx={{fontSize:'14px',padding:'5px 5px',color:'gray',cursor:'pointer'}}> Untitled 2025-02-01 12:43:21</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className="accordion_details">
           <Box className='select_input'><input type="text" /></Box>
           <Box sx={{display:'flex',gap:'5px',textAlign:'start!important'}}><Checkbox  size="small" sx={{p:'0px!important'}} /> <Typography class='select_list'>My Layouts</Typography></Box>
           <Box className='select_list'>Default Layout</Box>

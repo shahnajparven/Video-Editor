@@ -108,15 +108,16 @@ const [activeDiv, setActiveDiv] = useState(1);
 
           <Box className='accordian'>
 
-      <Accordion>
+      <Accordion className="accordian_summary">
         <AccordionSummary
           expandIcon={<ArrowDropDownIcon />}
           aria-controls="panel2-content"
           id="panel2-header"
+          className="accordian_summary2"
         >
           <Typography component="span" sx={{fontSize:'14px',padding:'5px 5px',color:'gray',cursor:'pointer'}}> 4k cinema</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className="accordion_details">
          
           <Box className='select_list'>Untitled 2025-02-01 12:43:21</Box>
           <Box className='select_list'>Untitled 2025-02-02 12:43:22</Box>

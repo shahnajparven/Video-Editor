@@ -116,22 +116,30 @@ height: 30px;
 } */
 .accordian_summary{
   height: 30px!important;
+  border: 1px solid #ddd;
 }
 .MuiButtonBase-root{
-  min-height: 20px!important;
+  min-height: 30px!important;
   margin: 0px!important;
+ 
 } 
+
+.MuiPaper-root{
+  --Paper-shadow: none!important;
+}
 .MuiAccordionSummary-content{
   margin: 0px!important;
 }
-/* .css-yfrx4k-MuiAccordionSummary-content{
-  margin:0px!important;
-
-}
-.css-1808mag-MuiPaper-root-MuiAccordion-root{
-  box-shadow: none!important;
+.accordion_details{
+  background-color: #fff!important;
+  z-index :9999999999;
   border: 1px solid #ddd;
-} */
+}
+.accordion_details2{
+  background-color: #fff!important;
+  z-index :9999999999!important;
+  border: 1px solid #ddd;
+}
 .logo{
   height: 60px;
   width: 120px;
