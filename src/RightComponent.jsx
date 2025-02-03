@@ -5,39 +5,53 @@ import CloseIcon from '@mui/icons-material/Close';
 import UploadIcon from '@mui/icons-material/Upload';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SendIcon from "@mui/icons-material/Send";
+import { useState } from "react";
 
 
 function RightComponent({color,hexColor,showPicker,showSketchPicker,handleColorChange}) {
 
+const [activeDiv, setActiveDiv] = useState(1); 
+
+  const handleCollapseClick = (divNumber) => {
+    setActiveDiv(divNumber); 
+  };
+
+
   return (
     <>
-    
+
       <Box className="right_side">
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: "10px",
-            borderBottom: "2px solid gray",
+               borderBottom:'1px solid #121A5E'  ,   
             marginBottom: "20px",
           }}
         >
           <Box
+     
             sx={{
               width: "100%",
               textAlign: "center",
               fontSize: "14px",
               fontWeight: "bold",
               color: "#121A5E",
+              padding:'2px',
+            cursor:'pointer'
             }}
+            style={{borderBottom: activeDiv === 1 ? '4px solid #121A5E' : 'none'}}
+            onClick={() => handleCollapseClick(1)}
           >
             General
           </Box>
-          <Box sx={{ width: "100%", textAlign: "center", color: "#121A5E" }}>
+          <Box   onClick={() => handleCollapseClick(2)} sx={{ width: "100%", textAlign: "center", color: "#121A5E",  cursor:'pointer'}} style={{borderBottom: activeDiv === 2 ? '4px solid #121A5E' : 'none'}}>
             <SendIcon fontSize="20px" />
           </Box>
         </Box>
+                      
+        <Box  style={{ display: activeDiv === 1 ? 'block' : 'none'}}>
         <Box>
           <Typography
             sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
@@ -123,7 +137,33 @@ function RightComponent({color,hexColor,showPicker,showSketchPicker,handleColorC
 
         <Box sx={{display:'flex',gap:'5px',textAlign:'start!important',margin:'10px 0px'}}><Checkbox  size="small" sx={{p:'0px!important'}} /> 
         <Typography fontSize={'14px'} fontWeight={'bold'}>Automatically apply Transitions?
-        </Typography></Box>
+        </Typography>
+        </Box>
+        </Box>
+   
+          <Box style={{ display: activeDiv === 2 ? 'block' : 'none'}}>
+
+          <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Layout Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+
+        <Box marginTop={2}>
+        <Typography
+            sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
+          >
+            {" "}
+            Other Actions
+          </Typography>
+        <Box padding={2} border={'1px dashed #121A5E'} textAlign='center'>No actions to show</Box>
+        </Box>
+          </Box>
+    
       </Box>
     </>
   );

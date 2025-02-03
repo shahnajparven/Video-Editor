@@ -12,8 +12,10 @@
 
 }
 .MuiDrawer-root{
-  position: inherit!important;
-  height: 90vh; 
+  position: sticky!important;
+  top: 50px;
+  left: 0px;
+  height: 80vh; 
 }
 
 .header{
@@ -35,24 +37,49 @@
 }
 .main_content{
   width: 100%;
-  padding: 5px;
+  height: 100%;
+  /* padding: 5px; */
   margin: 15px;
-  display: flex;
-  justify-content: center;
   align-items: center;
   border: 2px solid gray;
   border-radius: 5px;
 }
+.video_content{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .video_box{
-  height: 100%;
-  width: 85%; 
-  /* background: black; */
-  padding: 5px;
+  height: 70vh;
+  width: 99%; 
   margin: 5px;
   border: 5px solid #ddd;
+  order: 2!important;
 }
-.drawer{
-  position: relative;
+.left_video_icon_box{
+  order: 1;
+ width: 10%;
+ padding: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+}
+.right_video_icon_box{
+  order: 3;
+  width: 10%;
+  padding: 5px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.drawerClosed{
+  background-color: red!important;
+}
+.drawerPaper {
+  background-color: red;
+  color: #333;
 }
 .dashboard_box,.FontDownloadIcon_box,.Image_box,.VolumeUp_box,.Videocam_box,.Delete_box,.List_box,.Send_box,.CameraAlt_box,.PermMedia_box,.SwapHorizontalCirclen_box{
   position: absolute;
@@ -62,14 +89,6 @@
   width: 300px;
   border: 1px solif gray;
 }
-.css-mdxzat{
-top:50px;
-left: 0px;
-}
-.css-3pzm2w{
-  height: 50px!important;
-}
-
 .hide {
   display: none;
 }
@@ -81,7 +100,7 @@ left: 0px;
   border-bottom: 1px solid #121A5E;
 }
 .accordian{
-height: 30px!important;
+height: 30px;
 }
 .css-1f1pi2l-MuiButtonBase-root-MuiAccordionSummary-root{
   min-height: 20px!important;

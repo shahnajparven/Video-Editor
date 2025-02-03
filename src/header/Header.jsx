@@ -147,9 +147,9 @@ export const Header = () => {
           <Box className='select_input'><input type="text" /></Box>
           <Box sx={{display:'flex',gap:'5px',textAlign:'start!important'}}><Checkbox  size="small" sx={{p:'0px!important'}} /> <Typography class='select_list'>My Layouts</Typography></Box>
           <Box className='select_list'>Default Layout</Box>
-          <Box className='select_list'>Untitled 2025-02-01 12:43:21</Box>
-          <Box className='select_list'>Untitled 2025-02-02 12:43:22</Box>
-          <Box className='select_list'>Untitled 2025-02-03 12:43:29</Box>
+          <Box class='select_list'>Untitled 2025-02-01 12:43:21</Box>
+          <Box class='select_list'>Untitled 2025-02-02 12:43:22</Box>
+          <Box class='select_list'>Untitled 2025-02-03 12:43:29</Box>
         </AccordionDetails>
       </Accordion>
     </Box>

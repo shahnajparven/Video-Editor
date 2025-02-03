@@ -33,6 +33,8 @@ function Home() {
     <Box  width={'25%'}>
     <RightComponent color={color} hexColor={hexColor} showSketchPicker={showSketchPicker} handleColorChange={handleColorChange} showPicker={showPicker}/>
     </Box>
+
+   
     </Box>
     </>
   )

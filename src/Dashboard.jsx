@@ -19,6 +19,11 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import SwapHorizontalCircleIcon from "@mui/icons-material/SwapHorizontalCircle";
 import WindowIcon from "@mui/icons-material/Window";
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import LayersIcon from '@mui/icons-material/Layers';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const drawerWidth = 350;
 
@@ -71,24 +76,62 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer({videoBoxColor}) {
   const [activeContent, setActiveContent] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = React.useState(false);
+
 
   const videoBox = {
-    width: "100%",
-    height: " 80%",
+    flexDirection: 'column'
   };
   const videoBox2 = {
-    width: "85%",
-    height: " 100%",
+    flexDirection: 'row'
   };
-  const [videoBoxs, setVideoBox] = React.useState();
 
+
+
+  const videocontent = {
+    height: '62vh',
+    order:2
+  };
+  const videocontent2 = {
+    height: '70vh',
+    order:2
+  };
+
+  const videoBoxLeft = {
+    width:'100%',
+    order:3
+  };
+  const videoBoxRight = {
+    width:'100%',
+    order:1
+  };  
+
+
+  const videoBoxLeft2 = {
+    width:'10%',
+    order:1
+  };
+  const videoBoxRight2 = {
+    width:'10%',
+    order:3
+  };  
+  const [videoBoxs, setVideoBox] = React.useState();
+  const [videoBoxIconLeft, setVideoBoxIconLeft] = React.useState();
+  const [videocontents, setVideocontent] = React.useState();
+  const [videoBoxIconRight, setVideoBoxIconRight] = React.useState();
   const handleDrawerOpen = () => {
     if (open) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("dashboard");
       setVideoBox(videoBox);
     }
@@ -99,8 +142,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("fontDownload");
       setVideoBox(videoBox);
     }
@@ -111,8 +160,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("Image");
       setVideoBox(videoBox);
     }
@@ -122,8 +177,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("VolumeUp");
       setVideoBox(videoBox);
     }
@@ -133,8 +194,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("Videocam");
       setVideoBox(videoBox);
     }
@@ -145,8 +212,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("Delete");
       setVideoBox(videoBox);
     }
@@ -156,8 +229,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("List");
       setVideoBox(videoBox);
     }
@@ -167,8 +246,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("Send");
       setVideoBox(videoBox);
     }
@@ -179,8 +264,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("CameraAlt");
       setVideoBox(videoBox);
     }
@@ -191,8 +282,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("PermMedia");
       setVideoBox(videoBox);
     }
@@ -203,8 +300,14 @@ export default function MiniDrawer({videoBoxColor}) {
       setOpen(false);
       setActiveContent("none");
       setVideoBox(videoBox2);
+      setVideoBoxIconLeft(videoBoxLeft2);
+      setVideocontent(videocontent2);
+      setVideoBoxIconRight(videoBoxRight2);
     } else {
       setOpen(true);
+      setVideoBoxIconLeft(videoBoxLeft);
+      setVideocontent(videocontent);
+      setVideoBoxIconRight(videoBoxRight);
       setActiveContent("SwapHorizontalCirclen");
       setVideoBox(videoBox);
     }
@@ -214,12 +317,51 @@ export default function MiniDrawer({videoBoxColor}) {
     setOpen(false);
   };
 
+
+  const handleCollapseClickSecond = () => {
+    if (isSidebarMenuOpen) {
+
+         setIsSidebarMenuOpen(false);
+    } else {
+
+        setIsSidebarMenuOpen(true);
+    }
+};
   return (
     <Box>
+    <Box>
+       <Box sx={{position:'fixed',bottom:'10px',left:'5px',zIndex:'9999'}}>
+      <Box onClick={handleCollapseClickSecond} sx={{background:'#121A5E',height:'40px', width:'40px',borderRadius:'5px',display:'flex',justifyContent:'center',alignItems:'center'}}>
+        <IconButton>
+        <FormatAlignJustifyIcon sx={{color:"#fff",fontSize:'25px'}}/> 
+        </IconButton>
+      </Box>
+
+      
+    </Box>
+    {isSidebarMenuOpen ? (
+                                   <Box sx={{position:'fixed',bottom:'10px',left:'50px',zIndex:'9999'}}>
+                                   <Box sx={{background:'#121A5E',height:'80px', width:'40px',borderRadius:'5px',display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+                                     <IconButton>
+                                     <FormatAlignJustifyIcon sx={{color:"#fff",fontSize:'25px'}}/> 
+                                     </IconButton>
+                                     <IconButton>
+                                     <FormatAlignJustifyIcon sx={{color:"#fff",fontSize:'25px'}}/> 
+                                     </IconButton>
+                                   </Box>
+                                   </Box>      
+                                    ) : (
+                                        <Box></Box>
+                                    )}
+  
+      </Box>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={open} className={open ? 'drawerOpen' : 'drawerClosed'}
+        classes={{
+          paper: 'drawerPaper',
+        }}>
           {/* Dashboard Icon */}
           <Box>
             <IconButton onClick={handleDrawerOpen}>
@@ -371,9 +513,15 @@ export default function MiniDrawer({videoBoxColor}) {
         </Drawer>
 
         <Box className="main_content">
-          <Box className="video_box"   style={{...videoBoxs,backgroundColor:videoBoxColor}}>
-           
+          <Box className='video_content' style={videoBoxs}>
+          <Box className='left_video_icon_box' style={videoBoxIconLeft}><LayersIcon sx={{fontSize:"20px",color:'#121A5E'}}/></Box>
+          <Box className="video_box" style={{...videocontents,backgroundColor:videoBoxColor}}></Box>
+          <Box className='right_video_icon_box' style={videoBoxIconRight}><FullscreenIcon sx={{fontSize:"20px",color:'#121A5E'}}/></Box>
           </Box>
+          <Box sx={{height:'30px',width:'100%',bgcolor:'gray',padding:'5px'}}>
+         <Typography  variant='span' sx={{color:'#fff',fontSize:'14px',fontWeight:'bold'}}> Layout  </Typography> <Typography variant='span' sx={{color:'#fff',fontSize:'14px'}}> "Untitled 2025-02-01 12:43:21"</Typography>
+          </Box>
+          <Box sx={{height:'15px',width:'15px',borderRadius:'100%',bgcolor:'#121A5E',margin:'8px 20px',display:'flex',justifyContent:'center',alignItems:'center'}}><PlayArrowIcon sx={{fontSize:"14px",color:'#fff'}}/></Box>
         </Box>
       </Box>
     </Box>
