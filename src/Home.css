@@ -1,24 +1,8 @@
 *{
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
+  box-sizing: border-box;;
 }
-/* .css-ptdwpq-MuiPaper-root-MuiAppBar-root{
-  background-color: red!important;
-} */
-
-/* .css-4raej3-MuiDrawer-docked .MuiDrawer-paper,.css-1lwhjos-MuiPaper-root-MuiDrawer-paper{
-  position: sticky!important;
-  top: 50px;
-  left: 0px;
-  height: 80vh; 
-} */
-/* .MuiDrawer-root{
-  position: sticky!important;
-  top: 50px;
-  left: 0px;
-  height: 80vh; 
-} */
 
 .header{
    padding: 5px 20px;
@@ -86,16 +70,18 @@
  }
 .dashboard_box,.FontDownloadIcon_box,.Image_box,.VolumeUp_box,.Videocam_box,.Delete_box,.List_box,.Send_box,.CameraAlt_box,.PermMedia_box,.SwapHorizontalCirclen_box{
   position: absolute;
-  top: 50px;
+  top: 0;
   left: 65px;
-  height: 90vh;
-  width: 300px;
+  height: 80vh;
+  width: 270px;
   border: 1px solif gray;
 
 }
-.test{
+.drawer_item_description{
+  height: 80vh;
   background-color: #fff;
   overflow-y: auto;
+  padding:5px 10px 80px 10px;
 }
 .hide {
   display: none;
@@ -107,13 +93,6 @@
 .layout_name:hover {
   border-bottom: 1px solid #121A5E;
 }
-/* .accordian{
-height: 30px;
-} */
-/* .css-1f1pi2l-MuiButtonBase-root-MuiAccordionSummary-root{
-  min-height: 20px!important;
-
-} */
 .accordian_summary{
   height: 30px!important;
   border: 1px solid #ddd;
@@ -138,7 +117,7 @@ height: 30px;
 .logo{
   height: 60px;
   width: 120px;
-padding: 5px;
+  padding: 5px;
 }
 .logo img{
   height: 100%;
@@ -179,4 +158,29 @@ cursor: pointer;
   border: 1px solid #d56161;
   color: #fff;
   background: #d56161!important;
+  }
+  .input_box input{
+  padding: 8px 5px;
+  width: 100%;
+  border-radius: 5px;
+  border:1px solid #ccc!important;
+  outline: none!important;
+  }
+
+  .input_box select{
+    padding: 8px 5px;
+  width: 100%;
+  border-radius: 5px;
+  border:1px solid #ccc!important;
+  outline: none!important;
+  }
+  .showMoreBtn button{
+    border: 1px solid #121A5E;
+  color: #fff;
+  background: #fff!important;
+  padding: 10px;
+  color: #121A5E;
+  font-weight: bold;
+  width: 100%;
+  border-radius: 5px;
   }
