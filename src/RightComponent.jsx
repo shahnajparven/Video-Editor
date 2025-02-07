@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Checkbox, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Typography } from "@mui/material";
 import { SketchPicker } from "react-color";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,6 +6,9 @@ import UploadIcon from '@mui/icons-material/Upload';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
+
+
+import Select from "react-select";
 
 
 function RightComponent({color,hexColor,showPicker,showSketchPicker,handleColorChange}) {
@@ -17,6 +20,15 @@ const [activeDiv, setActiveDiv] = useState(1);
   };
 
 
+
+  const options = [
+    { value: "default", label: "Default Layout" },
+    { value: "layout1", label: "Untitled 2025-02-01 01:29:28" },
+    { value: "layout2", label: "Untitled 2025-02-01 12:43:21" },
+    { value: "layout3", label: "Untitled 2025-02-01 21:14:13" },
+  ];
+
+  const [selectedOption, setSelectedOption] = useState(null);
   return (
     <>
 
@@ -90,12 +102,28 @@ const [activeDiv, setActiveDiv] = useState(1);
             {" "}
             Background Image
           </Typography>
-          <Box sx={{border:'1px solid #ccc',textAlign:'center',p:'15px 50px'}}>
+          <Box sx={{border:'1px solid #ccc',textAlign:'center',p:'10px 50px'}}>
             <ReportProblemIcon/>
           <Typography fontSize={'14px'}> No Image set, add from Toolbox or Upload!</Typography>
           </Box>
-          <button className="upload_button"><UploadIcon fontSize="30px"/>  <Typography variant="span" fontSize={'14px'}> Upload</Typography></button>
-           <button  className="remove_button"><CloseIcon  fontSize="30px"/><Typography variant="span" fontSize={'14px'}> Remove </Typography></button>
+          {/* <button className="upload_button"><UploadIcon fontSize="30px"/>  <Typography variant="span" fontSize={'14px'}> Upload
+  <input
+    type="file"
+    hidden
+  /></Typography></button> */}
+   <Button
+   className="upload_button"
+                sx={{  textTransform: 'capitalize'}}
+  variant="contained"
+  component="label">
+Upload
+  <input
+    type="file"
+    hidden
+  />
+</Button>
+           <Button  className="remove_button"  sx={{  textTransform: 'capitalize'}} ariant="contained"
+  component="label"><CloseIcon  fontSize="30px" sx={{color:"#fff"}}/><Typography variant="span" fontSize={'14px'} color="#fff"> Remove </Typography></Button>
         </Box>
         <Box marginTop={2}>
         <Typography
@@ -108,22 +136,15 @@ const [activeDiv, setActiveDiv] = useState(1);
 
           <Box className='accordian'>
 
-      <Accordion className="accordian_summary">
-        <AccordionSummary
-          expandIcon={<ArrowDropDownIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-          className="accordian_summary2"
-        >
-          <Typography component="span" sx={{fontSize:'14px',padding:'5px 5px',color:'gray',cursor:'pointer'}}> 4k cinema</Typography>
-        </AccordionSummary>
-        <AccordionDetails className="accordion_details">
-         
-          <Box className='select_list'>Untitled 2025-02-01 12:43:21</Box>
-          <Box className='select_list'>Untitled 2025-02-02 12:43:22</Box>
-          <Box className='select_list'>Untitled 2025-02-03 12:43:29</Box>
-        </AccordionDetails>
-      </Accordion>
+          <Box className="w-72 mx-auto my-4">
+      <Select
+        options={options}
+        value={selectedOption}
+        onChange={setSelectedOption}
+        placeholder="Select a layout..."
+        isSearchable
+      />
+    </Box>
     </Box>
         </Box>
         <Box marginTop={2}>
@@ -163,6 +184,7 @@ const [activeDiv, setActiveDiv] = useState(1);
           </Typography>
         <Box padding={2} border={'1px dashed #6874dd'} textAlign='center'>No actions to show</Box>
         </Box>
+        
           </Box>
     
       </Box>

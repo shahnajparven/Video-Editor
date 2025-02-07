@@ -120,7 +120,6 @@ export default function MiniDrawer({ videoBoxColor }) {
   const [videoBoxIconLeft, setVideoBoxIconLeft] = React.useState();
   const [videocontents, setVideocontent] = React.useState();
   const [videoBoxIconRight, setVideoBoxIconRight] = React.useState();
-const [activeDiv, setActiveDiv] = React.useState(); 
 
   const handleDrawerOpen = () => {
     if (activeContent === "dashboard") {
@@ -521,7 +520,7 @@ const [activeDiv, setActiveDiv] = React.useState();
             </Box>
 
             <DrawerContent
-            activeDiv={activeDiv}
+           
               activeContent={activeContent}
               handleDrawerClose={handleDrawerClose}
             />

@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { Box, Checkbox, colors } from "@mui/material";
+import { Box, Button, Checkbox, colors } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MenuIcon from "@mui/icons-material/Menu";
 import InputLabel from "@mui/material/InputLabel";
@@ -28,13 +28,15 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Modal from "@mui/material/Modal";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 const style = {
   position: "absolute",
-  top: "20%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
+  height: "90vh",
+  overflowY: "auto",
   bgcolor: "#fff",
 };
 
@@ -66,11 +68,18 @@ export const Header = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} style={{ outline: "none", borderRadius: "5px" }}>
-          <Box sx={{display:'flex', justifyContent:'space-between'}}>
-          <Typography variant="h6" component="h6" fontSize={"20px"} padding={2}>
-            Edit Layout
-          </Typography>
-          <Box sx={{padding:'20px'}} onClick={modalClose}><CloseIcon/></Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography
+              variant="h6"
+              component="h6"
+              fontSize={"18px"}
+              padding={2}
+            >
+              Edit Layout
+            </Typography>
+            <Box sx={{ padding: "20px" }} onClick={modalClose}>
+              <CloseIcon />
+            </Box>
           </Box>
           <Divider />
           <Box padding={"15px 30px"}>
@@ -83,9 +92,12 @@ export const Header = () => {
                   borderTop: activeDiv === 1 ? "1px solid #ddd" : "none",
                   borderRight: activeDiv === 1 ? "1px solid #ddd" : "none",
                   borderBottom: activeDiv === 2 ? "1px solid #ddd" : "none",
+                  cursor: "pointer",
                 }}
               >
-                General
+                <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                  General
+                </Typography>
               </Box>
               <Box
                 onClick={() => handleCollapseClick(2)}
@@ -95,9 +107,12 @@ export const Header = () => {
                   borderTop: activeDiv === 2 ? "1px solid #ddd" : "none",
                   borderRight: activeDiv === 2 ? "1px solid #ddd" : "none",
                   borderBottom: activeDiv === 1 ? "1px solid #ddd" : "none",
+                  cursor: "pointer",
                 }}
               >
-                Description
+                <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>
+                  Description
+                </Typography>
               </Box>
               <Box
                 width={"100%"}
@@ -106,15 +121,171 @@ export const Header = () => {
               ></Box>
             </Box>
 
-            <Box style={{ display: activeDiv === 1 ? "block" : "none" }}>
+            <Box
+              style={{
+                width: "100%",
+                display: activeDiv === 1 ? "block" : "none",
+              }}
+              padding={2}
+            >
               {" "}
-              <Typography id="modal-modal-description" sx={{ p: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              <Box sx={{ display: "flex", gap: "20px", padding: 2 }}>
+                <Typography
+                  sx={{ width: "10%", fontSize: "14px", fontWeight: "bold" }}
+                >
+                  Current Folder
+                </Typography>
+                <Typography sx={{ fontSize: "14px", color: "gray" }}>
+                  Root Folder
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: "20px",
+                  padding: 2,
+                }}
+              >
+                <Typography
+                  sx={{ width: "10%", fontSize: "14px", fontWeight: "bold" }}
+                >
+                  Move to Selected Folder:
+                </Typography>
+                <Button
+                  sx={{ textTransform: "capitalize" }}
+                  variant="contained"
+                  component="label"
+                >
+                  Select Folder
+                  <input type="file" hidden />
+                </Button>
+                <Typography sx={{ fontSize: "13px", color: "gray" }}>
+                  Root Folder
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", gap: "20px", padding: 2 }}>
+                <Typography
+                  sx={{ width: "10%", fontSize: "14px", fontWeight: "bold" }}
+                >
+                  Name
+                </Typography>
+
+                <Box width={"100%"} className="select_input">
+                  <input type="text" />
+                  <Typography
+                    variant="span"
+                    sx={{ fontSize: "13px", color: "gray" }}
+                  >
+                    The Name of the Layout - (1 - 50 characters)
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", gap: "20px", padding: 2 }}>
+                <Typography
+                  sx={{ width: "10%", fontSize: "14px", fontWeight: "bold" }}
+                >
+                  Tags
+                </Typography>
+                <Box width={"100%"} className="select_input">
+                  <input type="text" />
+                  <Typography
+                    variant="span"
+                    sx={{ fontSize: "13px", color: "gray" }}
+                  >
+                    T Tags for this Layout - Comma separated string of Tags or
+                    Tag|Value format. If you choose a Tag that has associated
+                    values, they will be shown for selection below.
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", gap: "20px", padding: 2 }}>
+                <Typography
+                  sx={{ width: "10%", fontSize: "14px", fontWeight: "bold" }}
+                >
+                  Code Identifier
+                </Typography>
+                <Box width={"100%"} className="select_input">
+                  <input type="text" />
+                  <Typography
+                    variant="span"
+                    sx={{ fontSize: "13px", color: "gray" }}
+                  >
+                    TEnter a string to be used as the Code to identify this
+                    Layout when used with Interactive Actions.
+                  </Typography>
+                </Box>
+              </Box>
+              <Box padding={2}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "5px",
+                    alignItems: "center",
+                    textAlign: "center",
+                    margin: "10px 0px",
+                  }}
+                >
+                  <Checkbox size="small" sx={{ p: "0px!important" }} />
+                  <Typography fontSize={"14px"} fontWeight={"bold"}>
+                    Retired
+                  </Typography>
+                </Box>
+
+                <Typography
+                  variant="span"
+                  sx={{ fontSize: "13px", color: "gray" }}
+                >
+                  T Tags for this Layout - Comma separated string of Tags or
+                  Tag|Value format. If you choose a Tag that has associated
+                  values, they will be shown for selection below.
+                </Typography>
+              </Box>
+              <Box padding={2}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "5px",
+                    alignItems: "center",
+                    textAlign: "center",
+                    margin: "10px 0px",
+                  }}
+                >
+                  <Checkbox size="small" sx={{ p: "0px!important" }} />
+                  <Typography fontSize={"14px"} fontWeight={"bold"}>
+                    Enable Stats Collection?
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="span"
+                  sx={{ fontSize: "13px", color: "gray" }}
+                >
+                  T Tags for this Layout - Comma separated string of Tags or
+                  Tag|Value format. If you choose a Tag that has associated
+                  values, they will be shown for selection below.
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{ p: 2 }}
+              style={{ display: activeDiv === 2 ? "block" : "none" }}
+            >
+              <Typography sx={{ fontSize: "14px", padding: "10px 0px" }}>
+                An optional description of the Layout. (1 - 250 characters)
               </Typography>
+              <Box width={"100%"} className="select_input">
+                <textarea type="text" />
+              </Box>
             </Box>
-            <Box sx={{ p: 2 }} style={{ display: activeDiv === 2 ? "block" : "none" }}>
-              hjghj
-            </Box>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" ,gap:"10px",padding:'10px'}}>
+            <Button variant="outlined"  sx={{  textTransform: 'capitalize'}}>
+              Cancel
+            </Button>
+            <Button variant="contained" sx={{  textTransform: 'capitalize'}}>
+              Save
+            </Button>
           </Box>
         </Box>
       </Modal>
