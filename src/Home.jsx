@@ -23,7 +23,7 @@ function Home() {
     
     <Header/>
     <Box  sx={{
-            width: "100%",
+            width: "100%",         
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "center",

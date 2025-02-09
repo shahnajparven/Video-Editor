@@ -81,7 +81,6 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer({ videoBoxColor }) {
   const [activeContent, setActiveContent] = React.useState("");
   const [open, setOpen] = React.useState(false);
-  const [isSidebarMenuOpen, setIsSidebarMenuOpen] = React.useState(false);
 
   const videoBox = {
     flexDirection: "column",
@@ -91,7 +90,7 @@ export default function MiniDrawer({ videoBoxColor }) {
   };
 
   const videocontent = {
-    height: "62vh",
+    height: "60vh",
     order: 2,
   };
   const videocontent2 = {
@@ -323,80 +322,10 @@ export default function MiniDrawer({ videoBoxColor }) {
     setVideoBoxIconRight(videoBoxRight2);
   };
 
-  const handleCollapseClickSecond = () => {
-    if (isSidebarMenuOpen) {
-      setIsSidebarMenuOpen(false);
-    } else {
-      setIsSidebarMenuOpen(true);
-    }
-  };
+
   return (
     <Box>
-      <Box>
-        <Box
-          sx={{
-            position: "fixed",
-            bottom: "10px",
-            left: "5px",
-            zIndex: "9999",
-          }}
-        >
-          <Box
-            onClick={handleCollapseClickSecond}
-            sx={{
-              background: "#121A5E",
-              height: "40px",
-              width: "40px",
-              borderRadius: "5px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <IconButton>
-              <FormatAlignJustifyIcon
-                sx={{ color: "#fff", fontSize: "25px" }}
-              />
-            </IconButton>
-          </Box>
-        </Box>
-        {isSidebarMenuOpen ? (
-          <Box
-            sx={{
-              position: "fixed",
-              bottom: "10px",
-              left: "50px",
-              zIndex: "9999",
-            }}
-          >
-            <Box
-              sx={{
-                background: "#121A5E",
-                height: "80px",
-                width: "40px",
-                borderRadius: "5px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <IconButton>
-                <FormatAlignJustifyIcon
-                  sx={{ color: "#fff", fontSize: "25px" }}
-                />
-              </IconButton>
-              <IconButton>
-                <FormatAlignJustifyIcon
-                  sx={{ color: "#fff", fontSize: "25px" }}
-                />
-              </IconButton>
-            </Box>
-          </Box>
-        ) : (
-          <Box></Box>
-        )}
-      </Box>
+   
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
@@ -407,7 +336,6 @@ export default function MiniDrawer({ videoBoxColor }) {
             position: "sticky",
             top: "50px",
             left: "0",
-
             zIndex: 1300,
             "& .MuiDrawer-paper": {
               overflow: "none",

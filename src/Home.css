@@ -63,7 +63,7 @@
  .drawer_items{
   position: fixed;
   width: 60px;
-  height: 80vh;
+  height: 90vh;
   overflow-y: auto;
   scrollbar-width: thin;
   background-color: #121A5E;
