@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 // import MuiDrawer from "@mui/material/Drawer";
@@ -29,6 +29,10 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import CloseIcon from "@mui/icons-material/Close";
 import { DrawerContent } from "./dashboard/DrawerContent";
+import { useDrop } from "react-dnd";
+import AnalogClock from "./drop/AnalogClock";
+import { Rnd } from "react-rnd";
+import DraggableText from "./drop/DraggableText";
 
 const drawerWidth = 350;
 
@@ -79,8 +83,8 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer({ videoBoxColor }) {
-  const [activeContent, setActiveContent] = React.useState("");
-  const [open, setOpen] = React.useState(false);
+  const [activeContent, setActiveContent] = useState("");
+  const [open, setOpen] = useState(false);
 
   const videoBox = {
     flexDirection: "column",
@@ -115,15 +119,15 @@ export default function MiniDrawer({ videoBoxColor }) {
     width: "10%",
     order: 3,
   };
-  const [videoBoxs, setVideoBox] = React.useState();
-  const [videoBoxIconLeft, setVideoBoxIconLeft] = React.useState();
-  const [videocontents, setVideocontent] = React.useState();
-  const [videoBoxIconRight, setVideoBoxIconRight] = React.useState();
+  const [videoBoxs, setVideoBox] = useState();
+  const [videoBoxIconLeft, setVideoBoxIconLeft] = useState();
+  const [videocontents, setVideocontent] = useState();
+  const [videoBoxIconRight, setVideoBoxIconRight] = useState();
 
   const handleDrawerOpen = () => {
     if (activeContent === "dashboard") {
       setOpen(false);
-       setActiveContent("none");
+      setActiveContent("none");
       setVideoBox(videoBox2);
       setVideoBoxIconLeft(videoBoxLeft2);
       setVideocontent(videocontent2);
@@ -322,10 +326,28 @@ export default function MiniDrawer({ videoBoxColor }) {
     setVideoBoxIconRight(videoBoxRight2);
   };
 
+  const [droppedItems, setDroppedItems] = useState([]);
+  const [size, setSize] = useState({ width: 200, height: 100 });
+  const [rotation, setRotation] = useState(0); // Rotation state
+
+  const handleRotate = (e) => {
+    // Calculate rotation based on mouse position or drag event
+    const angle = Math.atan2(e.clientY, e.clientX) * (180 / Math.PI);
+    setRotation(angle);
+  };
+
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: ["TEXT", "CLOCK"], // ✅ Accept both "TEXT" and "CLOCK"
+    drop: (item) => {
+      setDroppedItems((prev) => [...prev, item]); // Store item object
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  }));
 
   return (
     <Box>
-   
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
@@ -358,7 +380,7 @@ export default function MiniDrawer({ videoBoxColor }) {
               </Box>
               {/* Font Download Icon */}
               <Box>
-                <IconButton onClick={()=>handleDrawerOpenFontDownloadIcon(2)}>
+                <IconButton onClick={() => handleDrawerOpenFontDownloadIcon(2)}>
                   <FontDownloadIcon
                     sx={{ fontSize: "28px", margin: "5px 0px", color: "#fff" }}
                   />
@@ -448,7 +470,6 @@ export default function MiniDrawer({ videoBoxColor }) {
             </Box>
 
             <DrawerContent
-           
               activeContent={activeContent}
               handleDrawerClose={handleDrawerClose}
             />
@@ -460,10 +481,35 @@ export default function MiniDrawer({ videoBoxColor }) {
             <Box className="left_video_icon_box" style={videoBoxIconLeft}>
               <LayersIcon sx={{ fontSize: "20px", color: "#121A5E" }} />
             </Box>
-            <Box
-              className="video_box"
-              style={{ ...videocontents, backgroundColor: videoBoxColor }}
-            ></Box>
+           
+              <Box
+                ref={drop}
+                className="video_box"
+                style={{ ...videocontents, backgroundColor: videoBoxColor }}
+              >
+                
+                {droppedItems.length === 0 ? (
+                  <Typography textAlign="center">Drop clocks here</Typography>
+                ) : (
+                  droppedItems.map((item, index) => (
+                    <Box key={index} marginBottom={2}>
+                      {item.type === "analog" ? (
+                        
+                        <AnalogClock />
+                       
+                      ) : item.type === "digital" ? (
+                        <AnalogClock />
+                      ) : item.type === "text" ? (
+                        <DraggableText />
+                      ) : (
+                        <Box>test</Box>
+                      )}
+                    </Box>
+                  ))
+                )}
+                  
+              </Box>
+          
             <Box className="right_video_icon_box" style={videoBoxIconRight}>
               <FullscreenIcon sx={{ fontSize: "20px", color: "#121A5E" }} />
             </Box>

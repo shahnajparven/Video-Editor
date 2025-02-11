@@ -1,5 +1,5 @@
 import { Avatar, Box, Checkbox, IconButton, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -36,29 +36,33 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import FontDownloadIcon from '@mui/icons-material/FontDownload';
-import RoomIcon from '@mui/icons-material/Room';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import PercentIcon from '@mui/icons-material/Percent';
-import ImportExportIcon from '@mui/icons-material/ImportExport';
-import FlagIcon from '@mui/icons-material/Flag';
-import ImageIcon from '@mui/icons-material/Image';
-import CodeOffIcon from '@mui/icons-material/CodeOff';
+import FontDownloadIcon from "@mui/icons-material/FontDownload";
+import RoomIcon from "@mui/icons-material/Room";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import PercentIcon from "@mui/icons-material/Percent";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
+import FlagIcon from "@mui/icons-material/Flag";
+import ImageIcon from "@mui/icons-material/Image";
+import CodeOffIcon from "@mui/icons-material/CodeOff";
 import { ImSortNumbericDesc } from "react-icons/im";
-import Person2Icon from '@mui/icons-material/Person2';
-import ScreenshotMonitorIcon from '@mui/icons-material/ScreenshotMonitor';
-import ListIcon from '@mui/icons-material/List';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import BackHandIcon from '@mui/icons-material/BackHand';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import EmailIcon from '@mui/icons-material/Email';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
-import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
-import StarsIcon from '@mui/icons-material/Stars';
-import SpeedIcon from '@mui/icons-material/Speed';
-import NearMeIcon from '@mui/icons-material/NearMe';
-import AirIcon from '@mui/icons-material/Air';
+import Person2Icon from "@mui/icons-material/Person2";
+import ScreenshotMonitorIcon from "@mui/icons-material/ScreenshotMonitor";
+import ListIcon from "@mui/icons-material/List";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import BackHandIcon from "@mui/icons-material/BackHand";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import EmailIcon from "@mui/icons-material/Email";
+import InsertLinkIcon from "@mui/icons-material/InsertLink";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
+import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
+import StarsIcon from "@mui/icons-material/Stars";
+import SpeedIcon from "@mui/icons-material/Speed";
+import NearMeIcon from "@mui/icons-material/NearMe";
+import AirIcon from "@mui/icons-material/Air";
+import logo from "../assets/logo.png";
+// import { useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
+
 
 
 export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
@@ -78,7 +82,6 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
     setOpen(true);
     setActiveDiv("worldclock");
   };
-
 
   const calender = () => {
     setOpen(true);
@@ -100,7 +103,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
     setOpen(true);
     setActiveDiv("mastodon");
   };
-  
+
   const menuboardCategory = () => {
     setOpen(true);
     setActiveDiv("menuboardCategory");
@@ -128,6 +131,58 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
   const handleAllFunctionClose = () => {
     setOpen(false);
   };
+
+
+
+   const [time, setTime] = useState(new Date());
+  
+    useEffect(() => {
+      const timerId = setInterval(() => {
+        setTime(new Date());
+      }, 1000);
+  
+      return () => clearInterval(timerId); // Cleanup interval when unmounted
+    }, []); // Run only on mount
+  
+  
+      // 🔹 Make Clock Draggable
+      // const [{ isDragging }, dragRef] = useDrag(() => ({
+      //     type: "CLOCK",
+      //     item: { id: "analog-clock" },
+      //     collect: (monitor) => ({
+      //       isDragging: monitor.isDragging(),
+      //     }),
+      //   }))
+
+
+      const [droppedItems, setDroppedItems] = useState([]);
+
+      // 🔹 Make Analog Clock Draggable
+      const [{ isDraggingAnalog }, dragAnalogRef] = useDrag(() => ({
+        type: "CLOCK",
+        item: { id: `analog-clock-${Date.now()}`, type: "analog" },
+        collect: (monitor) => ({
+          isDraggingAnalog: monitor.isDragging(),
+        }),
+      }));
+    
+      // 🔹 Make Digital Clock Draggable
+      const [{ isDraggingDigital }, dragDigitalRef] = useDrag(() => ({
+        type: "CLOCK",
+        item: { id: `digital-clock-${Date.now()}`, type: "digital" },
+        collect: (monitor) => ({
+          isDraggingDigital: monitor.isDragging(),
+        }),
+      }));
+     
+  // 🔹Text field Draggable
+  const [{ isDraggingText }, dragTextRef] = useDrag(() => ({
+    type: "TEXT",
+    item: {  type: "text" },
+    collect: (monitor) => ({
+      isDraggingText: monitor.isDragging(),
+    }),
+  }));
 
   return (
     <Box>
@@ -158,7 +213,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
-                      <Box>
+                      <Box ref={dragAnalogRef} sx={{ opacity: isDraggingAnalog ? 0.5 : 1 }}>
                         <Box
                           border={"1px solid #ddd"}
                           padding={"8px"}
@@ -171,9 +226,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                              <img src={logo} height={60} width={60} />
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -186,7 +244,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                       </Box>
                     </Grid>
                     <Grid item xs={6}>
-                      <Box>
+                      <Box ref={dragDigitalRef} sx={{ opacity: isDraggingDigital ? 0.5 : 1 }}>
                         <Box
                           border={"1px solid #ddd"}
                           padding={"8px"}
@@ -199,9 +257,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                              <img src={logo} height={60} width={60} />
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -227,9 +288,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                              <img src={logo} height={60} width={60} />
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -278,9 +342,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60} />
+                          </Box>
                         </Box>
                       </Box>
                       <Typography
@@ -306,9 +373,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60} />
+                          </Box>
                         </Box>
                       </Box>
                       <Typography
@@ -334,9 +404,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60} />
+                          </Box>
                         </Box>
                       </Box>
                       <Typography
@@ -362,9 +435,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60} />
+                          </Box>
                         </Box>
                       </Box>
                       <Typography
@@ -413,9 +489,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                              <img src={logo} height={60} width={60} />
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -423,7 +502,8 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                           color="#676363"
                           textAlign={"center"}
                         >
-                          World Clock  <br/>-Analogue
+                          World Clock <br />
+                          -Analogue
                         </Typography>
                       </Box>
                     </Grid>
@@ -441,9 +521,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -451,7 +534,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                           color="#676363"
                           textAlign={"center"}
                         >
-                          World Clock  <br/>- Time/Date
+                          World Clock <br />- Time/Date
                         </Typography>
                       </Box>
                     </Grid>
@@ -469,9 +552,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -479,7 +565,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                           color="#676363"
                           textAlign={"center"}
                         >
-                          World Clock <br/> - Text
+                          World Clock <br /> - Text
                         </Typography>
                       </Box>
                     </Grid>
@@ -504,176 +590,179 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Summary
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Description
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Strat Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              End Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <RoomIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Location
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                                
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Summary
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                               
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Description
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                                
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Start Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                End Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
 
-              
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <RoomIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Location
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
+
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                 ELEMENTS
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -689,18 +778,22 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Calender Detailed  <br/>Event
+                          Calender Detailed <br />
+                          Event
                         </Typography>
                       </Box>
                     </Grid>
@@ -718,18 +811,22 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Calender Simple  <br/>Event
+                          Calender Simple <br />
+                          Event
                         </Typography>
                       </Box>
                     </Grid>
@@ -747,18 +844,22 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Calender Event  <br/>Row
+                          Calender Event <br />
+                          Row
                         </Typography>
                       </Box>
                     </Grid>
@@ -766,10 +867,10 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                 </Box>
 
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STATIC TEMPLATES
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STATIC TEMPLATES
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -785,18 +886,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Daily Calender<br/>Light
+                          Daily Calender
+                          <br />
+                          Light
                         </Typography>
                       </Box>
                     </Grid>
@@ -814,18 +920,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Daily Calender<br/>Dark
+                          Daily Calender
+                          <br />
+                          Dark
                         </Typography>
                       </Box>
                     </Grid>
@@ -843,22 +954,27 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Weekly Calender<br/>Light
+                          Weekly Calender
+                          <br />
+                          Light
                         </Typography>
                       </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                       <Box>
                         <Box
                           border={"1px solid #ddd"}
@@ -874,7 +990,9 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               gap: "5px",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -903,7 +1021,9 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               gap: "5px",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -932,7 +1052,9 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               gap: "5px",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -961,7 +1083,9 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               gap: "5px",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -990,7 +1114,9 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               gap: "5px",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
@@ -1002,7 +1128,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                          Schedule Calende <br/> Dark
                         </Typography>
                       </Box>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Box>
               </Box>
@@ -1024,178 +1150,181 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                               Currency  <br/>Name
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <LocalAtmIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                               Last Trade  <br/>Price
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <PercentIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Change <br/>
-                            PercentIcon
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ImportExportIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Change <br/>
-                              Icon
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FlagIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Currency <br/>Logo
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Currency <br />
+                                Name
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <LocalAtmIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Last Trade <br />
+                                Price
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <PercentIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Change <br />
+                                PercentIcon
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ImportExportIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Change <br />
+                                Icon
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
 
-              
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FlagIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Currency <br />
+                                Logo
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
+
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STENCILS
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STENCILS
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -1211,18 +1340,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Curriency-Single 1
+                          Curriency-Single 1
                         </Typography>
                       </Box>
                     </Grid>
@@ -1240,16 +1372,19 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
                           Curriency-Single 2
                         </Typography>
@@ -1269,16 +1404,19 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
                           Curriency-Single 3
                         </Typography>
@@ -1298,16 +1436,19 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
                           Curriency-Single 4
                         </Typography>
@@ -1327,18 +1468,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Curriency-group 1
+                          Curriency-group 1
                         </Typography>
                       </Box>
                     </Grid>
@@ -1356,16 +1500,19 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
                           Curriency-group 2
                         </Typography>
@@ -1375,10 +1522,10 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                 </Box>
 
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STATIC TEMPLATES
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STATIC TEMPLATES
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -1394,18 +1541,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Curriences 1
+                          Curriences 1
                         </Typography>
                       </Box>
                     </Grid>
@@ -1423,22 +1573,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Curriences 2
+                          Curriences 2
                         </Typography>
                       </Box>
                     </Grid>
-       
                   </Grid>
                 </Box>
               </Box>
@@ -1460,59 +1612,57 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-             
-              
-           
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
+                  </Box>
+                </Box>
 
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STATIC TEMPLATES
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STATIC TEMPLATES
+                  </Typography>
                   <Grid container spacing={1}>
-                  <Grid item xs={6}>
+                    <Grid item xs={6}>
+                      <Box
+                        border={"1px solid #ddd"}
+                        padding={"15px 8px"}
+                        borderRadius={"4px"}
+                      >
                         <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "flex-stat",
+                            alignItems: "center",
+                            gap: "5px",
+                          }}
                         >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
+                          <ImageIcon
+                            fontSize="18px"
+                            sx={{ color: "#676363" }}
+                          />{" "}
+                          <Typography
+                            fontSize={"14px"}
+                            sx={{ color: "#676363" }}
                           >
-                           
-                            <ImageIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Dashboard <br/>
-                              Image
-                            </Typography>
-                          </Box>
+                            Dashboard <br />
+                            Image
+                          </Typography>
                         </Box>
-                      </Grid>
-
-                   
+                      </Box>
+                    </Grid>
                   </Grid>
                 </Box>
               </Box>
@@ -1533,176 +1683,176 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              String
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ImSortNumbericDesc 
-                              fontSize="18px"
-                              color= "#676363" 
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Number
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                               Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ImageIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Image
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                           
-                            <CodeOffIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              HTML
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                String
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ImSortNumbericDesc
+                                fontSize="18px"
+                                color="#676363"
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Number
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ImageIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Image
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CodeOffIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                HTML
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
 
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STATIC TEMPLATES
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STATIC TEMPLATES
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -1718,18 +1868,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        Plan Table<br/>(Customizable)
+                          Plan Table
+                          <br />
+                          (Customizable)
                         </Typography>
                       </Box>
                     </Grid>
@@ -1747,19 +1902,28 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                       A Light Green<br/>Background with<br/>
-                       Darker Green <br/>Border,.White<br/>Heading Text
+                          A Light Green
+                          <br />
+                          Background with
+                          <br />
+                          Darker Green <br />
+                          Border,.White
+                          <br />
+                          Heading Text
                         </Typography>
                       </Box>
                     </Grid>
@@ -1777,18 +1941,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        Simple white<br/> table with rounded <br/>rows
+                          Simple white
+                          <br /> table with rounded <br />
+                          rows
                         </Typography>
                       </Box>
                     </Grid>
@@ -1806,18 +1975,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Striped blue table<br/> with darker blue <br/>header
+                          Striped blue table
+                          <br /> with darker blue <br />
+                          header
                         </Typography>
                       </Box>
                     </Grid>
@@ -1835,18 +2009,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          White Striped <br/>table with  <br/>orange header
+                          White Striped <br />
+                          table with <br />
+                          orange header
                         </Typography>
                       </Box>
                     </Grid>
@@ -1864,18 +2043,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          White and gray <br/>table with  <br/>split row
+                          White and gray <br />
+                          table with <br />
+                          split row
                         </Typography>
                       </Box>
                     </Grid>
@@ -1893,18 +2077,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         A dark table<br/> with round borders <br/>and yellow <br/>heading text
+                          A dark table
+                          <br /> with round borders <br />
+                          and yellow <br />
+                          heading text
                         </Typography>
                       </Box>
                     </Grid>
@@ -1922,18 +2112,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Round cells with<br/> multi colors and <br/>a full coloured <br/> header 
+                          Round cells with
+                          <br /> multi colors and <br />a full coloured <br />{" "}
+                          header
                         </Typography>
                       </Box>
                     </Grid>
@@ -1957,206 +2152,203 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                           
-                            <Person2Icon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Profile Photo
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Description
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                          
-                            <ScreenshotMonitorIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Screen name
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <AccountCircleIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              useruame
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                             Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ImageIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Post Photo
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <Person2Icon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Profile Photo
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Description
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ScreenshotMonitorIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Screen name
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <AccountCircleIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                useruame
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
 
-              
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ImageIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Post Photo
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
+
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STENCILS
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STENCILS
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -2172,18 +2364,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                       Post
+                          Post
                         </Typography>
                       </Box>
                     </Grid>
@@ -2201,18 +2396,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        Vintage Photo
+                          Vintage Photo
                         </Typography>
                       </Box>
                     </Grid>
@@ -2230,16 +2428,19 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                           <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
                           Post-Dark
                         </Typography>
@@ -2249,10 +2450,10 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                 </Box>
 
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STATIC TEMPLATES
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STATIC TEMPLATES
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -2268,18 +2469,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Template 1-Text,<br/>Profile image
+                          Template 1-Text,
+                          <br />
+                          Profile image
                         </Typography>
                       </Box>
                     </Grid>
@@ -2297,18 +2503,25 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Template 1-Text,<br/>Profile image,<br/>Photo
+                          Template 1-Text,
+                          <br />
+                          Profile image,
+                          <br />
+                          Photo
                         </Typography>
                       </Box>
                     </Grid>
@@ -2326,18 +2539,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Template 3-Text
+                          Template 3-Text
                         </Typography>
                       </Box>
                     </Grid>
@@ -2355,18 +2571,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Template 4-Text,<br/>Profile image
+                          Template 4-Text,
+                          <br />
+                          Profile image
                         </Typography>
                       </Box>
                     </Grid>
@@ -2384,18 +2605,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        Template 5-Text,<br/>Profile image
+                          Template 5-Text,
+                          <br />
+                          Profile image
                         </Typography>
                       </Box>
                     </Grid>
@@ -2413,18 +2639,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                            Template 6-Text,<br/>Profile image
+                          Template 6-Text,
+                          <br />
+                          Profile image
                         </Typography>
                       </Box>
                     </Grid>
@@ -2442,18 +2673,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                            Template 7-Text,<br/>Profile image
+                          Template 7-Text,
+                          <br />
+                          Profile image
                         </Typography>
                       </Box>
                     </Grid>
@@ -2471,18 +2707,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Template 8-Text,<br/>Profile image
+                          Template 8-Text,
+                          <br />
+                          Profile image
                         </Typography>
                       </Box>
                     </Grid>
@@ -2500,18 +2741,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Template 9-Text,<br/>logo
+                          Template 9-Text,
+                          <br />
+                          logo
                         </Typography>
                       </Box>
                     </Grid>
@@ -2529,18 +2775,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Template 10-Text,<br/>Photo,logo
+                          Template 10-Text,
+                          <br />
+                          Photo,logo
                         </Typography>
                       </Box>
                     </Grid>
@@ -2558,18 +2809,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Template 11-Text,<br/>logo 
+                          Template 11-Text,
+                          <br />
+                          logo
                         </Typography>
                       </Box>
                     </Grid>
@@ -2587,18 +2843,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Template 12-Text,<br/>Profile image,logo
+                          Template 12-Text,
+                          <br />
+                          Profile image,logo
                         </Typography>
                       </Box>
                     </Grid>
@@ -2616,18 +2877,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Metro Social
+                          Metro Social
                         </Typography>
                       </Box>
                     </Grid>
@@ -2635,7 +2899,9 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                 </Box>
               </Box>
             </Box>
-            <Box className={activeDiv === "menuboardCategory" ? "show" : "hide"}>
+            <Box
+              className={activeDiv === "menuboardCategory" ? "show" : "hide"}
+            >
               <Box
                 sx={{
                   width: "100%",
@@ -2651,118 +2917,116 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Name
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Description
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ImageIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Category <br/>Photo
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
-
-              
-               
-               
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Name
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Description
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ImageIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Category <br />
+                                Photo
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
             </Box>
             <Box className={activeDiv === "menuboardProduct" ? "show" : "hide"}>
@@ -2781,256 +3045,254 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Name
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Description
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <LocalAtmIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                             Price
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <BackHandIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                             Allergy Info
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ImageIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Photo
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ListIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Option Name
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <LocalAtmIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Option Value
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <InventoryIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Calories
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Name
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Description
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <LocalAtmIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Price
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <BackHandIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Allergy Info
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
 
-              
-              
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ImageIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Photo
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
 
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ListIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Option Name
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <LocalAtmIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Option Value
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <InventoryIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Calories
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
             </Box>
             <Box className={activeDiv === "notifications" ? "show" : "hide"}>
@@ -3049,142 +3311,142 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Subject
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <EmailIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Body
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                             Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Create Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
-                                   
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Subject
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <EmailIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Body
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Create Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
             </Box>
             <Box className={activeDiv === "rssTicker" ? "show" : "hide"}>
@@ -3203,285 +3465,285 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                    <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Title
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Summary
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Content
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <Person2Icon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Author
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                               Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"5px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Published <br/>Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ImageIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Image
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <InsertLinkIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Link
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <InsertLinkIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              PermaLink
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Title
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Summary
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Content
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <Person2Icon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Author
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"5px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Published <br />
+                                Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
 
-            
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ImageIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Image
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <InsertLinkIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Link
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <InsertLinkIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                PermaLink
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
+
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STATIC TEMPLATES
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STATIC TEMPLATES
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -3497,18 +3759,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        Image Only
+                          Image Only
                         </Typography>
                       </Box>
                     </Grid>
@@ -3526,18 +3791,25 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Image overlaid<br/>with the Feed <br/>Content on the <br/>left
+                          Image overlaid
+                          <br />
+                          with the Feed <br />
+                          Content on the <br />
+                          left
                         </Typography>
                       </Box>
                     </Grid>
@@ -3555,18 +3827,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                       Image overlaid<br/>with the Title
+                          Image overlaid
+                          <br />
+                          with the Title
                         </Typography>
                       </Box>
                     </Grid>
@@ -3584,18 +3861,25 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Prominent title<br/>with description <br/>and name <br/>separator
+                          Prominent title
+                          <br />
+                          with description <br />
+                          and name <br />
+                          separator
                         </Typography>
                       </Box>
                     </Grid>
@@ -3613,45 +3897,48 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        Title only
+                          Title only
                         </Typography>
                       </Box>
                     </Grid>
                     <Grid item xs={6}>
+                      <Box
+                        border={"1px solid #ddd"}
+                        padding={"5px 8px"}
+                        borderRadius={"4px"}
+                      >
                         <Box
-                          border={"1px solid #ddd"}
-                          padding={"5px 8px"}
-                          borderRadius={"4px"}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "flex-stat",
+                            alignItems: "center",
+                            gap: "5px",
+                          }}
                         >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
+                          <Typography
+                            fontSize={"13px"}
+                            sx={{ color: "#676363" }}
                           >
-                           
-                            <Typography
-                              fontSize={"13px"}
-                              sx={{ color: "#676363" }}
-                            >
-                             Articles Shown <br/>in  marquee
-                            </Typography>
-                          </Box>
+                            Articles Shown <br />
+                            in marquee
+                          </Typography>
                         </Box>
-                      </Grid>
+                      </Box>
+                    </Grid>
                   </Grid>
                 </Box>
               </Box>
@@ -3672,176 +3959,178 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Name
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Symble
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <LocalAtmIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Last Trade <br/>Price
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <PercentIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                            Change <br/>percentage
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <SwapVertIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Stock Icon
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Name
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Symble
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <LocalAtmIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Last Trade <br />
+                                Price
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <PercentIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Change <br />
+                                percentage
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
 
-              
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <SwapVertIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Stock Icon
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
+
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STENCILS
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STENCILS
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -3857,18 +4146,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"13px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Stocks-Single 1 
+                          Stocks-Single 1
                         </Typography>
                       </Box>
                     </Grid>
@@ -3886,18 +4178,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                           Stocks-Single 2
+                          Stocks-Single 2
                         </Typography>
                       </Box>
                     </Grid>
@@ -3915,18 +4210,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                           Stocks-Group 1 
+                          Stocks-Group 1
                         </Typography>
                       </Box>
                     </Grid>
@@ -3934,10 +4232,10 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                 </Box>
 
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STATIC TEMPLATES
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STATIC TEMPLATES
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -3953,18 +4251,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Stocks 1
+                          Stocks 1
                         </Typography>
                       </Box>
                     </Grid>
@@ -3982,22 +4283,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        Stocks 2
+                          Stocks 2
                         </Typography>
                       </Box>
                     </Grid>
-                   
                   </Grid>
                 </Box>
               </Box>
@@ -4018,393 +4321,392 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   <ArrowBackIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
-              <Box padding={'0px 10px 50px 10px'}>
+              <Box padding={"0px 10px 50px 10px"}>
                 <Box>
-              <Typography
-                sx={{ fontSize: "14px", padding: "5px", fontWeight: "bold" }}
-              >
-                {" "}
-                Search
-              </Typography>
-              <Box className="input_box">
-                <input type="text" />
-              </Box>
-              </Box>
-              <Box marginTop={2}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  ELEMENTS
-                </Typography>
-                <Box>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-         
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Summary
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                 
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <RoomIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Location
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            
-                            <DeviceThermostatIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Temparature
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <DeviceThermostatIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Min <br/> Temparature
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <DeviceThermostatIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Max <br/> Temparature
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <PercentIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Humidity <br/> Percent
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                           
-                            <StarsIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                             Icon
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <NearMeIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Wind <br/> Direction
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <SpeedIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Wind Speed
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <AirIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Wind Speed <br/> Unit
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <FontDownloadIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Attribute
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <ImageIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                             Image
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          border={"1px solid #ddd"}
-                          padding={"15px 8px"}
-                          borderRadius={"4px"}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-stat",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <CalendarMonthIcon
-                              fontSize="18px"
-                              sx={{ color: "#676363" }}
-                            />{" "}
-                            <Typography
-                              fontSize={"14px"}
-                              sx={{ color: "#676363" }}
-                            >
-                              Date
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-                    </Grid>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      padding: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    Search
+                  </Typography>
+                  <Box className="input_box">
+                    <input type="text" />
                   </Box>
                 </Box>
-              </Box>
+                <Box marginTop={2}>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    ELEMENTS
+                  </Typography>
+                  <Box>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Summary
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <RoomIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Location
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <DeviceThermostatIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Temparature
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <DeviceThermostatIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Min <br /> Temparature
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
 
-              
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <DeviceThermostatIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Max <br /> Temparature
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <PercentIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Humidity <br /> Percent
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <StarsIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Icon
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <NearMeIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Wind <br /> Direction
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <SpeedIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Wind Speed
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <AirIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Wind Speed <br /> Unit
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <FontDownloadIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Attribute
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <ImageIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Image
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Box
+                            border={"1px solid #ddd"}
+                            padding={"15px 8px"}
+                            borderRadius={"4px"}
+                          >
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-stat",
+                                alignItems: "center",
+                                gap: "5px",
+                              }}
+                            >
+                              <CalendarMonthIcon
+                                fontSize="18px"
+                                sx={{ color: "#676363" }}
+                              />{" "}
+                              <Typography
+                                fontSize={"14px"}
+                                sx={{ color: "#676363" }}
+                              >
+                                Date
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Box>
+
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STENCILS
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STENCILS
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -4420,18 +4722,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        Forecast 1
+                          Forecast 1
                         </Typography>
                       </Box>
                     </Grid>
@@ -4449,16 +4754,19 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
                           Daily 1
                         </Typography>
@@ -4478,18 +4786,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                           Daily 2
+                          Daily 2
                         </Typography>
                       </Box>
                     </Grid>
@@ -4507,18 +4818,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                           Daily 3
+                          Daily 3
                         </Typography>
                       </Box>
                     </Grid>
@@ -4536,18 +4850,21 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                           Daily 4
+                          Daily 4
                         </Typography>
                       </Box>
                     </Grid>
@@ -4555,10 +4872,10 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                 </Box>
 
                 <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                <Typography sx={{ fontSize: "14px", padding: "5px" }}>
-                  {" "}
-                  STATIC TEMPLATES
-                </Typography>
+                  <Typography sx={{ fontSize: "14px", padding: "5px" }}>
+                    {" "}
+                    STATIC TEMPLATES
+                  </Typography>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box>
@@ -4574,18 +4891,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        LandScape-<br/>Current day,<br/>4 day forecast
+                          LandScape-
+                          <br />
+                          Current day,
+                          <br />4 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4603,18 +4926,25 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         LandScape-<br/>Current day,<br/>Summary
+                          LandScape-
+                          <br />
+                          Current day,
+                          <br />
+                          Summary
                         </Typography>
                       </Box>
                     </Grid>
@@ -4632,18 +4962,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                        LandScape-<br/>Current day
+                          LandScape-
+                          <br />
+                          Current day
                         </Typography>
                       </Box>
                     </Grid>
@@ -4661,18 +4996,27 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         LandScape-<br/>Current day,<br/>detailed,4<br/>day forecast
+                          LandScape-
+                          <br />
+                          Current day,
+                          <br />
+                          detailed,4
+                          <br />
+                          day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4690,18 +5034,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Portrait-<br/>Current day,<br/>2 day forecast
+                          Portrait-
+                          <br />
+                          Current day,
+                          <br />2 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4719,18 +5069,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          LandScape-<br/>Current day table,<br/>4 day forecast
+                          LandScape-
+                          <br />
+                          Current day table,
+                          <br />4 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4748,18 +5104,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                           Square-<br/>Current day
+                          Square-
+                          <br />
+                          Current day
                         </Typography>
                       </Box>
                     </Grid>
@@ -4777,18 +5138,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          LandScape-<br/>Current day,<br/>4 day forecast
+                          LandScape-
+                          <br />
+                          Current day,
+                          <br />4 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4806,18 +5173,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                         Portrait-<br/>Current day,detailed,<br/>4 day forecast
+                          Portrait-
+                          <br />
+                          Current day,detailed,
+                          <br />4 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4835,18 +5208,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          LandScape-Current<br/> day detailed<br/>4 day forecast
+                          LandScape-Current
+                          <br /> day detailed
+                          <br />4 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4864,18 +5242,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Portrait-<br/>Current day,<br/>3 day forecast
+                          Portrait-
+                          <br />
+                          Current day,
+                          <br />3 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4893,18 +5277,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          LandScape-Current<br/> day detailed<br/>3 day forecast
+                          LandScape-Current
+                          <br /> day detailed
+                          <br />3 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4922,18 +5311,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          LandScape-Current<br/> day detailed<br/>4 day forecast
+                          LandScape-Current
+                          <br /> day detailed
+                          <br />4 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4951,19 +5345,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Portrait-<br/>Current day details,<br/>4 day forecast
-                         
+                          Portrait-
+                          <br />
+                          Current day details,
+                          <br />4 day forecast
                         </Typography>
                       </Box>
                     </Grid>
@@ -4981,18 +5380,24 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Square-Forecast<br/>squared with <br/>background
+                          Square-Forecast
+                          <br />
+                          squared with <br />
+                          background
                         </Typography>
                       </Box>
                     </Grid>
@@ -5010,18 +5415,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Square-detailed<br/>weather
+                          Square-detailed
+                          <br />
+                          weather
                         </Typography>
                       </Box>
                     </Grid>
@@ -5039,18 +5449,23 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          Scale-Weather<br/>background only
+                          Scale-Weather
+                          <br />
+                          background only
                         </Typography>
                       </Box>
                     </Grid>
@@ -5068,22 +5483,26 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              bgcolor: "#6874dd",
                             }}
                           >
-                            <Avatar />
+                            <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                           </Box>
                         </Box>
                         <Typography
                           fontSize={"14px"}
                           color="#676363"
                           textAlign={"center"}
-                          fontWeight={'bold'}
+                          fontWeight={"bold"}
                         >
-                          LandScape-<br/>weather fullscreen
+                          LandScape-
+                          <br />
+                          weather fullscreen
                         </Typography>
                       </Box>
                     </Grid>
-             
                   </Grid>
                 </Box>
               </Box>
@@ -5118,6 +5537,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                     <Grid container spacing={1}>
                       <Grid item xs={6}>
                         <Box
+                      
                           border={"1px solid #ddd"}
                           padding={"15px 8px"}
                           borderRadius={"4px"}
@@ -5129,6 +5549,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              cursor:'pointer'
                             }}
                           >
                             <AccessTimeIcon
@@ -5157,6 +5578,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <HourglassEmptyIcon
@@ -5184,6 +5606,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <CodeIcon
@@ -5211,6 +5634,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <VideocamIcon
@@ -5239,6 +5663,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              cursor:'pointer'
                             }}
                           >
                             <VideoFileIcon
@@ -5266,6 +5691,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                              cursor:'pointer'
                             }}
                           >
                             <VideocamIcon
@@ -5293,6 +5719,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <LanIcon
@@ -5321,6 +5748,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <PublicIcon
@@ -5362,6 +5790,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <CalendarMonthIcon
@@ -5390,6 +5819,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <PiChartLineUpBold color="#676363" />
@@ -5416,6 +5846,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <DashboardIcon
@@ -5444,6 +5875,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <DatasetIcon
@@ -5473,6 +5905,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <FaMastodon color="#676363" />
@@ -5498,6 +5931,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <AssignmentIcon
@@ -5527,6 +5961,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <CoffeeIcon
@@ -5556,6 +5991,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <NotificationsNoneIcon
@@ -5585,6 +6021,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <WifiIcon
@@ -5613,6 +6050,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <IoBarChartSharp color="#676363" />
@@ -5638,6 +6076,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                               justifyContent: "flex-stat",
                               alignItems: "center",
                               gap: "5px",
+                               cursor:'pointer'
                             }}
                           >
                             <CloudIcon
@@ -5693,6 +6132,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
                     <Box
+                    ref={dragTextRef} sx={{ opacity: isDraggingText ? 0.5 : 1 }}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}
@@ -6031,7 +6471,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                       <Box className="input_box">
                         <select>
                           <option value="MediaId"></option>
-                          <option value="MediaId">Media Id</option>
+
                           <option value="Name">Name</option>
                           <option value="Orientation">Orientation</option>
                           <option value="Width">Width</option>
@@ -6089,9 +6529,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                        <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -6213,7 +6656,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                       <Box className="input_box">
                         <select>
                           <option value="Name"></option>
-                          <option value="MediaId">Media Id</option>
+
                           <option value="Name">Name</option>
                           <option value="Orientation">Orientation</option>
                           <option value="Width">Width</option>
@@ -6396,7 +6839,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                       <Box className="input_box">
                         <select>
                           <option value="Name"></option>
-                          <option value="MediaId">Media Id</option>
+
                           <option value="Name">Name</option>
                           <option value="Orientation">Orientation</option>
                           <option value="Width">Width</option>
@@ -6580,7 +7023,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                       <Box className="input_box">
                         <select name="cars" id="cars">
                           <option value="Name"></option>
-                          <option value="MediaId">Media Id</option>
+
                           <option value="Name">Name</option>
                           <option value="Orientation">Orientation</option>
                           <option value="Width">Width</option>
@@ -7166,7 +7609,6 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                       <Box className="input_box">
                         <select name="cars" id="cars">
                           <option value="Name"></option>
-                          <option value="MediaId">Media Id</option>
                           <option value="Name">Name</option>
                           <option value="Orientation">Orientation</option>
                           <option value="Width">Width</option>
@@ -7198,9 +7640,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7217,9 +7662,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7236,9 +7684,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7255,9 +7706,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7274,9 +7728,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7293,9 +7750,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7391,9 +7851,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7410,9 +7873,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7429,9 +7895,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7448,9 +7917,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7467,9 +7939,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -7486,9 +7961,12 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                             justifyContent: "flex-stat",
                             alignItems: "center",
                             gap: "5px",
+                            bgcolor: "#6874dd",
                           }}
                         >
-                          <Avatar />
+                          <Box>
+                            <img src={logo} height={60} width={60}/>
+                            </Box>
                         </Box>
                       </Box>
                     </Grid>
