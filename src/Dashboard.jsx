@@ -33,6 +33,8 @@ import { useDrop } from "react-dnd";
 import AnalogClock from "./drop/AnalogClock";
 import { Rnd } from "react-rnd";
 import DraggableText from "./drop/DraggableText";
+import DigitalClock from "./drop/DigitalClock";
+import FlipClock from "./drop/ClockFlip";
 
 const drawerWidth = 350;
 
@@ -327,7 +329,7 @@ export default function MiniDrawer({ videoBoxColor }) {
   };
 
   const [droppedItems, setDroppedItems] = useState([]);
-  const [size, setSize] = useState({ width: 200, height: 100 });
+  const [size, setSize] = useState({ width: 150, height: 150 });
   const [rotation, setRotation] = useState(0); // Rotation state
 
   const handleRotate = (e) => {
@@ -346,6 +348,7 @@ export default function MiniDrawer({ videoBoxColor }) {
     }),
   }));
 
+ 
   return (
     <Box>
       <Box sx={{ display: "flex" }}>
@@ -481,14 +484,13 @@ export default function MiniDrawer({ videoBoxColor }) {
             <Box className="left_video_icon_box" style={videoBoxIconLeft}>
               <LayersIcon sx={{ fontSize: "20px", color: "#121A5E" }} />
             </Box>
-           
-              <Box
-                ref={drop}
-                className="video_box"
-                style={{ ...videocontents, backgroundColor: videoBoxColor }}
-              >
-                
-                {droppedItems.length === 0 ? (
+
+            <Box
+            ref={drop}
+              className="video_box"
+              style={{ ...videocontents, backgroundColor: videoBoxColor }}
+            >
+              {/* {droppedItems.length === 0 ? (
                   <Typography textAlign="center">Drop clocks here</Typography>
                 ) : (
                   droppedItems.map((item, index) => (
@@ -507,9 +509,74 @@ export default function MiniDrawer({ videoBoxColor }) {
                     </Box>
                   ))
                 )}
-                  
-              </Box>
-          
+                   */}
+
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  position: "relative",
+                  border: "1px solid #ccc",
+                }}
+              >
+               {droppedItems.map((item, index) => (
+                  <Rnd       
+                  key={index}           
+                    bounds="parent"
+                    minWidth={100}
+                    minHeight={100}
+                    enableResizing={{
+                      top: true,
+                      right: true,
+                      bottom: true,
+                      left: true,
+                      topRight: true,
+                      bottomRight: true,
+                      bottomLeft: true,
+                      topLeft: true,
+                    }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      background: "none",
+                      // border: "2px solid #fff",
+                      // border: isOver ? "2px solid #fff" : "transparent",
+
+                      cursor: "move",
+                    }}
+                    size={size}
+      onResizeStop={(e, direction, ref) => {
+        setSize({
+          width: ref.offsetWidth,
+          height: ref.offsetHeight,
+        });
+      }}
+                    className="rnd_div"
+                  >
+                   
+                        <Box key={index}>
+                          {item.type === "analog" ? (
+                            <AnalogClock size={size}/>
+                          ) : item.type === "digital" ? (
+                            <DigitalClock size={size}/>
+                          ) : item.type === "flip" ? (
+                            <FlipClock size={size}/>
+                          ) : item.type === "text" ? (
+                            <Box className="dragText">
+                              <input type="text" placeholder="Text" />
+                            </Box>
+                          ) : (
+                            <Box >test</Box>
+                          )}
+                        </Box>
+                     
+                   
+                  </Rnd>
+                 ))}
+              </div>
+            </Box>
+
             <Box className="right_video_icon_box" style={videoBoxIconRight}>
               <FullscreenIcon sx={{ fontSize: "20px", color: "#121A5E" }} />
             </Box>

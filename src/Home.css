@@ -1,60 +1,58 @@
-*{
+* {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;;
+  box-sizing: border-box;
 }
 
-.header{
-   padding: 5px 20px;
-   position:'fixed';
-   top: 0;
-   left: 0;
-   height:50px;
-   width:'100%';
-   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-   display: flex;
-   justify-content: center;
-   align-items: center;
+.header {
+  padding: 5px 20px;
+  position: "fixed";
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: "100%";
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.right_side{
+.right_side {
   padding: 20px 10px;
   width: 100%;
-
 }
-.main_content{
+.main_content {
   width: 100%;
   height: 100%;
-   padding: 10px; 
+  padding: 10px;
   margin: 10px;
   align-items: center;
   border: 2px solid #6874dd;
   border-radius: 5px;
 }
-.video_content{
+.video_content {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-.video_box{
+.video_box {
   position: relative;
   height: 70vh;
-  width: 99%; 
+  width: 99%;
   margin: 5px;
   border: 5px solid #6874dd;
-  order: 2!important;
+  order: 2 !important;
 }
-.left_video_icon_box{
+.left_video_icon_box {
   order: 1;
- width: 10%;
- padding: 5px;
+  width: 10%;
+  padding: 5px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-
 }
-.right_video_icon_box{
+.right_video_icon_box {
   order: 3;
   width: 10%;
   padding: 5px;
@@ -62,28 +60,37 @@
   justify-content: flex-end;
   align-items: flex-start;
 }
- .drawer_items{
+.drawer_items {
   position: fixed;
   width: 60px;
   height: 90vh;
   overflow-y: auto;
   scrollbar-width: thin;
-  background-color: #121A5E;
- }
-.dashboard_box,.FontDownloadIcon_box,.Image_box,.VolumeUp_box,.Videocam_box,.Delete_box,.List_box,.Send_box,.CameraAlt_box,.PermMedia_box,.SwapHorizontalCirclen_box{
+  background-color: #121a5e;
+}
+.dashboard_box,
+.FontDownloadIcon_box,
+.Image_box,
+.VolumeUp_box,
+.Videocam_box,
+.Delete_box,
+.List_box,
+.Send_box,
+.CameraAlt_box,
+.PermMedia_box,
+.SwapHorizontalCirclen_box {
   position: absolute;
   top: 0;
   left: 65px;
   height: 80vh;
   width: 270px;
   border: 1px solif gray;
-
 }
-.drawer_item_description{
+.drawer_item_description {
   height: 80vh;
   background-color: #fff;
   overflow-y: auto;
-  padding:5px 10px 80px 10px;
+  padding: 5px 10px 80px 10px;
 }
 .hide {
   display: none;
@@ -93,208 +100,314 @@
   display: block;
 }
 .layout_name:hover {
-  border-bottom: 1px solid #121A5E;
+  border-bottom: 1px solid #121a5e;
 }
-.accordian_summary{
-  height: 30px!important;
+.accordian_summary {
+  height: 30px !important;
   border: 1px solid #ddd;
 }
-.MuiButtonBase-root{
-  min-height: 30px!important;
-  margin: 0px!important;
- 
-} 
+.MuiButtonBase-root {
+  min-height: 30px !important;
+  margin: 0px !important;
+}
 
-.MuiPaper-root{
-  --Paper-shadow: none!important;
+.MuiPaper-root {
+  --Paper-shadow: none !important;
 }
-.MuiAccordionSummary-content{
-  margin: 0px!important;
+.MuiAccordionSummary-content {
+  margin: 0px !important;
 }
-.accordion_details{
-  background-color: #fff!important;
-  z-index :9999999999;
+.accordion_details {
+  background-color: #fff !important;
+  z-index: 9999999999;
   border: 1px solid #ddd;
 }
-.logo{
+.logo {
   height: 60px;
   width: 120px;
   padding: 5px;
 }
-.logo img{
+.logo img {
   height: 100%;
   width: 100%;
   object-fit: contain;
 }
-.select_list{
-  text-align: start!important;
+.select_list {
+  text-align: start !important;
   font-size: 14px;
   padding: 8px 2px;
 }
-.select_input>input{
+.select_input > input {
   padding: 8px 5px;
   width: 100%;
   border-radius: 2px;
-  border:1px solid #ccc!important;
-  outline: none!important;
+  border: 1px solid #ccc !important;
+  outline: none !important;
 }
-.select_input>textarea{
+.select_input > textarea {
   padding: 8px 5px;
   width: 100%;
   border-radius: 2px;
-  border:1px solid #ccc!important;
-  outline: none!important;
+  border: 1px solid #ccc !important;
+  outline: none !important;
 }
-.right_part_input input{
+.right_part_input input {
   padding: 8px 5px;
   width: 100%;
   border-radius: 2px;
-  border:1px solid #ccc!important;
-  outline: none!important;
+  border: 1px solid #ccc !important;
+  outline: none !important;
 }
-.upload_button,.remove_button{
+.upload_button,
+.remove_button {
   padding: 10px;
   width: 50%;
   cursor: pointer;
-/* background-color: #fff!important; */
+  /* background-color: #fff!important; */
 }
 .upload_button {
   border: 1px solid #6874dd;
   color: #fff;
-  background: #6874dd!important;
-  border-radius: 0px!important;
-  padding: 5px!important;
-  box-shadow:none!important;
+  background: #6874dd !important;
+  border-radius: 0px !important;
+  padding: 5px !important;
+  box-shadow: none !important;
 }
 
-.remove_button{
+.remove_button {
   border: 1px solid #d56161;
   color: #fff;
-  background: #d56161!important;
-  border-radius: 0px!important;
-  padding: 5px!important;
-  box-shadow:none!important;
-  }
-  .input_box input{
+  background: #d56161 !important;
+  border-radius: 0px !important;
+  padding: 5px !important;
+  box-shadow: none !important;
+}
+.input_box input {
   padding: 8px 5px;
   width: 100%;
   border-radius: 5px;
-  border:1px solid #ccc!important;
-  outline: none!important;
-  }
+  border: 1px solid #ccc !important;
+  outline: none !important;
+}
 
-  .input_box select{
-    padding: 8px 5px;
+.input_box select {
+  padding: 8px 5px;
   width: 100%;
   border-radius: 5px;
-  border:1px solid #ccc!important;
-  outline: none!important;
-  }
-  .showMoreBtn button{
-    border: 1px solid #121A5E;
+  border: 1px solid #ccc !important;
+  outline: none !important;
+}
+.showMoreBtn button {
+  border: 1px solid #121a5e;
   color: #fff;
-  background: #fff!important;
+  background: #fff !important;
   padding: 10px;
-  color: #121A5E;
+  color: #121a5e;
   font-weight: bold;
   width: 100%;
   border-radius: 5px;
+}
+
+/* analog Clock start */
+.clock {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 50%;
+  background: black;
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Common styles for clock hands */
+.hour_hand,
+.min_hand {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform-origin: bottom center;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Hour Hand */
+.hour_hand {
+  width: 6px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* Minute Hand */
+.min_hand {
+  width: 4px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* Second Hand */
+.sec_hand {
+  width: 2px;
+  background: red;
+  border-radius: 2px;
+}
+
+/* Center Dot */
+.clock::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Clock Numbers */
+.clock span {
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  transform: translate(-50%, -50%);
+}
+
+/* Positioning Numbers */
+.twelve {
+  top: 5%;
+  left: 50%;
+}
+.one {
+  top: 15%;
+  left: 75%;
+}
+.two {
+  top: 30%;
+  left: 90%;
+}
+.three {
+  top: 50%;
+  right: 5%;
+}
+.four {
+  top: 70%;
+  left: 90%;
+}
+.five {
+  top: 85%;
+  left: 75%;
+}
+.six {
+  bottom: 0%;
+  left: 50%;
+}
+.seven {
+  top: 85%;
+  left: 25%;
+}
+.eight {
+  top: 70%;
+  left: 10%;
+}
+.nine {
+  top: 50%;
+  left: 5%;
+}
+.ten {
+  top: 30%;
+  left: 10%;
+}
+.eleven {
+  top: 15%;
+  left: 25%;
+}
+
+.sec_hand {
+  position: absolute;
+  width: 2px;
+  height: 40px;
+  background: red;
+  left: 50%;
+  bottom: 50%;
+
+  transform-origin: bottom;
+}
+/* analog clock end */
+.dragText input {
+  width: 100% !important;
+  background: transparent;
+  color: #fff;
+  border: none;
+  text-align: center;
+}
+
+.rnd_div {
+  position: relative;
+}
+.rnd_div:hover {
+  border: 2px solid #fff !important;
+}
+
+/* clock flip start */
+.flip-unit {
+  position: relative;
+  perspective: 1000px;
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+}
+
+.flip-unit:before,
+.flip-unit:after {
+  content: attr(data-unit);
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background-color: none;
+  overflow: hidden;
+  line-height: 1;
+  font-family: monospace;
+  color: white;
+}
+
+.flip-unit:before {
+  top: 0;
+  transform-origin: bottom;
+}
+
+.flip-unit:after {
+  bottom: 0;
+  transform-origin: top;
+}
+
+.flip-unit.flip:before {
+  animation: flip-before 0.5s forwards;
+}
+
+.flip-unit.flip:after {
+  animation: flip-after 0.5s forwards;
+}
+
+@keyframes flip-before {
+  from {
+    transform: rotateX(0);
   }
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+
+@keyframes flip-after {
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0);
+  }
+}
 
 
-   .clock {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    border-radius: 50%;
-    background: black;
-    border: 1px solid white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Common styles for clock hands */
-  .hour_hand, .min_hand {
-    position: absolute;
-    left: 50%;
-    bottom: 50%;
-    transform-origin: bottom center;
-    transition: transform 0.5s ease-in-out;
-  }
-  
-  /* Hour Hand */
-  .hour_hand {
-    width: 6px;
-    background: white;
-    border-radius: 2px;
-  }
-  
-  /* Minute Hand */
-  .min_hand {
-    width: 4px;
-    background: white;
-    border-radius: 2px;
-  }
-  
-  /* Second Hand */
-  .sec_hand {
-    width: 2px;
-    background: red;
-    border-radius: 2px;
-  }
-  
-  /* Center Dot */
-  .clock::after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: white;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Clock Numbers */
-  .clock span {
-    position: absolute;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Positioning Numbers */
-  .twelve { top: 5%; left: 50%; }
-  .one { top: 15%; left: 75%; }
-  .two { top: 30%; left: 90%; }
-  .three { top: 50%; right: 5%; }
-  .four { top: 70%; left: 90%; }
-  .five { top: 85%; left: 75%; }
-  .six { bottom: 0%; left: 50%; }
-  .seven { top: 85%; left: 25%; }
-  .eight { top: 70%; left: 10%; }
-  .nine { top: 50%; left: 5%; }
-  .ten { top: 30%; left: 10%; }
-  .eleven { top: 15%; left: 25%; }
-  
-  .sec_hand {
-    position: absolute;
-    width: 2px;
-    height: 40px;
-    background: red;
-    left: 50%;
-    bottom: 50%;
-
-    transform-origin: bottom;
-  }
-
-  .dragText input{
-    width: 100%!important;
-    background: transparent;
-    color: #fff;
-    border: none;
-    text-align: center;
-  }
+/* clock flip end */

@@ -174,6 +174,16 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
           isDraggingDigital: monitor.isDragging(),
         }),
       }));
+
+
+       // 🔹 Make flip Clock Draggable
+       const [{ isDraggingFlip }, dragFlipRef] = useDrag(() => ({
+        type: "CLOCK",
+        item: { id: `flip-clock-${Date.now()}`, type: "flip" },
+        collect: (monitor) => ({
+          isDraggingFlip: monitor.isDragging(),
+        }),
+      }));
      
   // 🔹Text field Draggable
   const [{ isDraggingText }, dragTextRef] = useDrag(() => ({
@@ -275,7 +285,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                       </Box>
                     </Grid>
                     <Grid item xs={6}>
-                      <Box>
+                      <Box ref={dragFlipRef} sx={{ opacity: isDraggingFlip ? 0.5 : 1 }}>
                         <Box
                           border={"1px solid #ddd"}
                           padding={"8px"}

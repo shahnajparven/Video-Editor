@@ -53,10 +53,11 @@
 import React, { useEffect, useState } from "react";
 import { Rnd } from "react-rnd";
 import "../Home.css";
+import { Box } from "@mui/material";
 
-const AnalogClock = () => {
+const AnalogClock = ({ size }) => {
   const [time, setTime] = useState(new Date());
-  const [size, setSize] = useState({ width: 150, height: 150 });
+  // const [size, setSize] = useState({ width: 150, height: 150 });
 
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -66,51 +67,56 @@ const AnalogClock = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "60vh",
-        position: "relative",
+    // <div
+    //   style={{
+    //     width: "100%",
+    //     height: "60vh",
+    //     position: "relative",
         
-      }}
-    >
-      <Rnd
-        default={{
-          x: 100,
-          y: 100,
+    //   }}
+    // >
+    //   <Rnd
+    //     default={{
+    //       x: 100,
+    //       y: 100,
+    //       width: size.width,
+    //       height: size.height,
+    //     }}
+    //     minWidth={100}
+    //     minHeight={50}
+    //     bounds="parent"
+    //     enableResizing={{
+    //       top: true,
+    //       right: true,
+    //       bottom: true,
+    //       left: true,
+    //       topRight: true,
+    //       bottomRight: true,
+    //       bottomLeft: true,
+    //       topLeft: true,
+    //     }}
+    //     onResize={(e, direction, ref) => {
+    //       setSize({ width: ref.offsetWidth, height: ref.offsetHeight });
+    //     }}
+    //     style={{
+    //       display: "flex",
+    //       justifyContent: "center",
+    //       alignItems: "center",
+    //       border: "1px solid white",
+    //     }}
+    //   >
+    
+        <Box
+        minWidth={50}
+        minHeight={50}
+        className="clock"
+        style={{
           width: size.width,
           height: size.height,
+          position: "relative",
+          borderRadius: "100%",
+          background: "black",
         }}
-        minWidth={100}
-        minHeight={50}
-        bounds="parent"
-        enableResizing={{
-          top: true,
-          right: true,
-          bottom: true,
-          left: true,
-          topRight: true,
-          bottomRight: true,
-          bottomLeft: true,
-          topLeft: true,
-        }}
-        onResize={(e, direction, ref) => {
-          setSize({ width: ref.offsetWidth, height: ref.offsetHeight });
-        }}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: "1px solid white",
-        }}
-      >
-        <div
-          className="clock"
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "relative",
-          }}
         >
           {/* Hour Hand */}
           <div
@@ -161,9 +167,9 @@ const AnalogClock = () => {
           <span className="nine">9</span>
           <span className="ten">10</span>
           <span className="eleven">11</span>
-        </div>
-      </Rnd>
-    </div>
+        </Box>
+    //   </Rnd>
+    // </div>
   );
 };
 
