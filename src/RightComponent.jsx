@@ -14,12 +14,11 @@ import UploadIcon from "@mui/icons-material/Upload";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
-
-
 import Select from "react-select";
 import AnalogClock from "./drop/AnalogClock";
 import DraggableText from "./drop/DraggableText";
-// import DraggableText from "./drop/DraggableText";
+
+
 
 function RightComponent({
   color,
@@ -182,7 +181,7 @@ function RightComponent({
             {/* <Box className='right_part_input'><input type="text"/></Box> */}
 
             <Box className="accordian">
-              <Box className="w-72 mx-auto my-4">
+              <Box className="w-72 mx-auto my-2">
                 <Select
                   options={options}
                   value={selectedOption}
@@ -246,6 +245,8 @@ function RightComponent({
             </Box>
 
             </Box>
+           
+
         </Box>
       </Box>
     </>

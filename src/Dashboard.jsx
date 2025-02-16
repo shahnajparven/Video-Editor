@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 // import MuiDrawer from "@mui/material/Drawer";
@@ -29,12 +29,9 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import CloseIcon from "@mui/icons-material/Close";
 import { DrawerContent } from "./dashboard/DrawerContent";
-import { useDrop } from "react-dnd";
-import AnalogClock from "./drop/AnalogClock";
-import { Rnd } from "react-rnd";
-import DraggableText from "./drop/DraggableText";
-import DigitalClock from "./drop/DigitalClock";
-import FlipClock from "./drop/ClockFlip";
+
+import CurrentComponent from "./components/CurrentComponent";
+import { Opacity } from "@mui/icons-material";
 
 const drawerWidth = 350;
 
@@ -84,9 +81,26 @@ const Drawer = styled(MuiDrawer, {
   ],
 }));
 
-export default function MiniDrawer({ videoBoxColor }) {
+export default function MiniDrawer({
+  image,
+  setImage,
+  color,
+  videoBoxColor,
+  setCurrentComponent,
+  current_component,
+  components = { components },
+  setComponents = { setComponents },
+}) {
   const [activeContent, setActiveContent] = useState("");
   const [open, setOpen] = useState(false);
+
+  const [left, setLeft] = useState("");
+  const [top, setTop] = useState("");
+
+  const [width, setwidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  const [rotate, setRotate] = useState(0);
 
   const videoBox = {
     flexDirection: "column",
@@ -328,27 +342,118 @@ export default function MiniDrawer({ videoBoxColor }) {
     setVideoBoxIconRight(videoBoxRight2);
   };
 
-  const [droppedItems, setDroppedItems] = useState([]);
-  const [size, setSize] = useState({ width: 150, height: 150 });
-  const [rotation, setRotation] = useState(0); // Rotation state
+  const moveElement = (id, currentInfo) => {
+    
+    setCurrentComponent(currentInfo);
+    let isMoving = true;
 
-  const handleRotate = (e) => {
-    // Calculate rotation based on mouse position or drag event
-    const angle = Math.atan2(e.clientY, e.clientX) * (180 / Math.PI);
-    setRotation(angle);
+    const currentdiv = document.getElementById(id);
+
+    const mouseMove = ({movementX,movementY}) => {
+      const getStyle = window.getComputedStyle(currentdiv)
+      const left = parseInt(getStyle.left)
+     
+      const top = parseInt(getStyle.top)
+
+      if (isMoving) {
+        currentdiv.style.left = `${left + movementX}px`
+        currentdiv.style.top = `${top + movementY}px`
+      }
+    }
+    const mouseUp = (e) => {
+      isMoving = false;
+
+      window.removeEventListener('mousemove', mouseMove);
+      window.removeEventListener('mouseup', mouseUp);
+      setLeft(parseInt(currentdiv.style.left));
+      setTop(parseInt(currentdiv.style.top));
+    }
+
+    window.addEventListener('mousemove', mouseMove);
+    window.addEventListener('mouseup', mouseUp);
   };
 
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["TEXT", "CLOCK"], // ✅ Accept both "TEXT" and "CLOCK"
-    drop: (item) => {
-      setDroppedItems((prev) => [...prev, item]); // Store item object
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-    }),
-  }));
+  const resizeElement = (id, currentInfo) => {
+    setCurrentComponent(currentInfo);
+    let isMoving = true;
 
- 
+    const currentdiv = document.getElementById(id);
+
+    const mouseMove = ({movementX,movementY}) => {
+      const getStyle = window.getComputedStyle(currentdiv)
+      const width = parseInt(getStyle.width)
+     
+      const height = parseInt(getStyle.height)
+
+      if (isMoving) {
+        currentdiv.style.width = `${width + movementX}px`
+        currentdiv.style.height = `${height + movementY}px`
+      }
+    }
+    const mouseUp = (e) => {
+      isMoving = false;
+
+      window.removeEventListener('mousemove', mouseMove);
+      window.removeEventListener('mouseup', mouseUp);
+      setwidth(parseInt(currentdiv.style.width));
+      setHeight(parseInt(currentdiv.style.height));
+    }
+
+    window.addEventListener('mousemove', mouseMove);
+    window.addEventListener('mouseup', mouseUp);
+  };
+  const rotateElement = (id, cinfo) => {
+    console.log(cinfo);
+  };
+
+  const removeComponent = (id) => {
+    const temp = components.filter((c) => c.id !== id);
+    setCurrentComponent("");
+    setComponents(temp);
+  };
+
+  const createShape = (name, type) => {
+    const style = {
+      id: components.length + 1,
+      name: name,
+      type,
+      left: 20,
+      top: 50,
+      opacity: 1,
+      width: 150,
+      height: 100,
+      rotate,
+      z_index: 2,
+      color: "#ccc",
+      borderRadius: 100,
+      setCurrentComponent: (a) => setCurrentComponent(a),
+      moveElement,
+      resizeElement,
+      rotateElement,
+      remove_background: () => setImage(""),
+    };
+    setComponents([...components, style]);
+  };
+
+  useEffect(() => {
+    if (current_component) {
+      const index = components.findIndex((c) => c.id === current_component.id);
+
+      const temp = components.filter((c) => c.id !== current_component.id);
+
+      if (current_component.name === "main_frame" && image) {
+        components[index].image = image || current_component.image;
+      }
+      components[index].color = color || current_component.color;
+
+      if (current_component.name !== "main_frame") {
+        components[index].left = left || current_component.left;
+        components[index].top = top || current_component.top;
+      }
+      setComponents([...temp, components[index]]);
+    }
+  }, [color, image,left,top]);
+
   return (
     <Box>
       <Box sx={{ display: "flex" }}>
@@ -473,6 +578,8 @@ export default function MiniDrawer({ videoBoxColor }) {
             </Box>
 
             <DrawerContent
+              setImage={setImage}
+              createShape={createShape}
               activeContent={activeContent}
               handleDrawerClose={handleDrawerClose}
             />
@@ -484,99 +591,17 @@ export default function MiniDrawer({ videoBoxColor }) {
             <Box className="left_video_icon_box" style={videoBoxIconLeft}>
               <LayersIcon sx={{ fontSize: "20px", color: "#121A5E" }} />
             </Box>
-
-            <Box
-            ref={drop}
-              className="video_box"
-              style={{ ...videocontents, backgroundColor: videoBoxColor }}
-            >
-              {/* {droppedItems.length === 0 ? (
-                  <Typography textAlign="center">Drop clocks here</Typography>
-                ) : (
-                  droppedItems.map((item, index) => (
-                    <Box key={index} marginBottom={2}>
-                      {item.type === "analog" ? (
-                        
-                        <AnalogClock />
-                       
-                      ) : item.type === "digital" ? (
-                        <AnalogClock />
-                      ) : item.type === "text" ? (
-                        <DraggableText />
-                      ) : (
-                        <Box>test</Box>
-                      )}
-                    </Box>
-                  ))
-                )}
-                   */}
-
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  position: "relative",
-                  border: "1px solid #ccc",
-                }}
-              >
-               {droppedItems.map((item, index) => (
-                  <Rnd       
-                  key={index}           
-                    bounds="parent"
-                    minWidth={100}
-                    minHeight={100}
-                    enableResizing={{
-                      top: true,
-                      right: true,
-                      bottom: true,
-                      left: true,
-                      topRight: true,
-                      bottomRight: true,
-                      bottomLeft: true,
-                      topLeft: true,
-                    }}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      background: "none",
-                      // border: "2px solid #fff",
-                      // border: isOver ? "2px solid #fff" : "transparent",
-
-                      cursor: "move",
-                    }}
-                    size={size}
-      onResizeStop={(e, direction, ref) => {
-        setSize({
-          width: ref.offsetWidth,
-          height: ref.offsetHeight,
-        });
-      }}
-                    className="rnd_div"
-                  >
-                   
-                        <Box key={index}>
-                          {item.type === "analog" ? (
-                            <AnalogClock size={size}/>
-                          ) : item.type === "digital" ? (
-                            <DigitalClock size={size}/>
-                          ) : item.type === "flip" ? (
-                            <FlipClock size={size}/>
-                          ) : item.type === "text" ? (
-                            <Box className="dragText">
-                              <input type="text" placeholder="Text" />
-                            </Box>
-                          ) : (
-                            <Box >test</Box>
-                          )}
-                        </Box>
-                     
-                   
-                  </Rnd>
-                 ))}
-              </div>
-            </Box>
-
+            {components.map((c, i) => (
+              <CurrentComponent
+                componentColor={color}
+                key={i}
+                info={c}
+                current_component={current_component}
+                removeComponent={removeComponent}
+                videocontents={videocontents}
+                videoBoxColor={videoBoxColor}
+              />
+            ))}
             <Box className="right_video_icon_box" style={videoBoxIconRight}>
               <FullscreenIcon sx={{ fontSize: "20px", color: "#121A5E" }} />
             </Box>

@@ -29,6 +29,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
+import zIndex from "@mui/material/styles/zIndex";
 const style = {
   position: "absolute",
   top: "50%",
@@ -314,9 +315,9 @@ export const Header = () => {
               <IconButton>
                 {" "}
                 <ArrowLeftIcon
-                  sx={{ color: "#121A5E", fontSize: "28px" }}
+                  sx={{ color: "#fff", fontSize: "28px" }}
                 />{" "}
-                <Typography fontWeight={"bold"} color="#121A5E">
+                <Typography fontWeight={"bold"} color="#fff">
                   EXIT
                 </Typography>
               </IconButton>
@@ -325,7 +326,7 @@ export const Header = () => {
             <Box>
               <DisabledByDefaultIcon
                 sx={{
-                  color: "#DC3545",
+                  color: "#bc0e0e",
                   fontSize: "32px",
                   borderRadius: "70px",
                 }}
@@ -348,13 +349,13 @@ export const Header = () => {
                   }}
                 >
                   <Box className="layout_name" onClick={modalOpen}>
-                    <SellIcon sx={{ fontSize: "14px", color: "#121A5E" }} />
+                    <SellIcon sx={{ fontSize: "14px", color: "#fff" }} />
                     <Typography
                       variant="span"
                       sx={{
                         fontSize: "14px",
                         padding: "0px 5px",
-                        color: "#121A5E",
+                        color: "#fff",
                         cursor: "pointer",
                       }}
                     >
@@ -372,14 +373,14 @@ export const Header = () => {
                   }}
                   onClick={modalOpen}
                 >
-                  <AccessTimeIcon sx={{ fontSize: "15px", color: "#121A5E" }} />
+                  <AccessTimeIcon sx={{ fontSize: "15px", color: "#fff" }} />
 
                   <Typography
                     variant="span"
                     sx={{
                       fontSize: "14px",
                       padding: "0px 5px",
-                      color: "#121A5E",
+                      color: "#fff",
                       cursor: "pointer",
                     }}
                   >
@@ -397,13 +398,13 @@ export const Header = () => {
                   }}
                   onClick={modalOpen}
                 >
-                  <OpenWithIcon sx={{ fontSize: "15px", color: "#121A5E" }} />
+                  <OpenWithIcon sx={{ fontSize: "15px", color: "#fff" }} />
                   <Typography
                     variant="span"
                     sx={{
                       fontSize: "14px",
                       padding: "0px 5px",
-                      color: "#121A5E",
+                      color: "#fff",
                       cursor: "pointer",
                     }}
                   >
@@ -457,7 +458,7 @@ export const Header = () => {
                       Untitled 2025-02-01 12:43:21
                     </Typography>
                   </AccordionSummary>
-                  <AccordionDetails className="accordion_details">
+                  <AccordionDetails className="accordion_details" style={{zIndex:'99999999999999999999999999'}}>
                     <Box className="select_input">
                       <input type="text" />
                     </Box>
@@ -481,11 +482,11 @@ export const Header = () => {
             </Box>
             <Tooltip title="Options">
               <IconButton sx={{ minWidth: 20 }}>
-                <MenuIcon sx={{ color: "#121A5E" }} />
+                <MenuIcon sx={{ color: "#fff" }} />
               </IconButton>
             </Tooltip>
             <IconButton sx={{ minWidth: 20 }}>
-              <NotificationsIcon sx={{ color: "#121A5E" }} />
+              <NotificationsIcon sx={{ color: "#fff" }} />
             </IconButton>
             <Tooltip title="Account settings">
               <IconButton

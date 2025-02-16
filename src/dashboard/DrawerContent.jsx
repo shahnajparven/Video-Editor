@@ -65,7 +65,7 @@ import { useDrag, useDrop } from "react-dnd";
 
 
 
-export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
+export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,setImage }) => {
   const [open, setOpen] = useState();
   const [activeDiv, setActiveDiv] = useState();
 
@@ -6209,6 +6209,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <Box
+                    onClick={()=>createShape('shape','rectangle')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}
@@ -6232,6 +6233,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
 
                   <Grid item xs={6}>
                     <Box
+                     onClick={()=>createShape('shape','circle')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}
@@ -6254,6 +6256,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <Box
+                    onClick={()=>createShape('shape','ellipse')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}
@@ -6283,6 +6286,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <Box
+                     onClick={()=>createShape('shape','triangle')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}
@@ -6528,6 +6532,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose }) => {
                     </Grid>
                     <Grid item xs={6}>
                       <Box
+                       onClick={()=> setImage('https://st5.depositphotos.com/23188010/77062/i/450/depositphotos_770624600-stock-photo-green-field-morning-render-illustration.jpg')}
                         border={"1px solid #ddd"}
                         padding={"8px"}
                         borderRadius={"4px"}
