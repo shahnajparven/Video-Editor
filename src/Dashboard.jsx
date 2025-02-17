@@ -31,7 +31,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { DrawerContent } from "./dashboard/DrawerContent";
 
 import CurrentComponent from "./components/CurrentComponent";
-import { Opacity } from "@mui/icons-material";
 
 const drawerWidth = 350;
 
@@ -85,6 +84,7 @@ export default function MiniDrawer({
   image,
   setImage,
   color,
+  setColor,
   videoBoxColor,
   setCurrentComponent,
   current_component,
@@ -97,43 +97,43 @@ export default function MiniDrawer({
   const [left, setLeft] = useState("");
   const [top, setTop] = useState("");
 
-  const [width, setwidth] = useState("");
+  const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
 
   const [rotate, setRotate] = useState(0);
 
   const videoBox = {
-    flexDirection: "column",
+    // flexDirection: "column",
   };
   const videoBox2 = {
-    flexDirection: "row",
+    // flexDirection: "row",
   };
 
   const videocontent = {
-    height: "60vh",
-    order: 2,
+    // height: "60vh",
+    // order: 2,
   };
   const videocontent2 = {
-    height: "70vh",
-    order: 2,
+    // height: "70vh",
+    // order: 2,
   };
 
   const videoBoxLeft = {
-    width: "100%",
-    order: 3,
+    // width: "100%",
+    // order: 3,
   };
   const videoBoxRight = {
-    width: "100%",
-    order: 1,
+    // width: "100%",
+    // order: 1,
   };
 
   const videoBoxLeft2 = {
-    width: "10%",
-    order: 1,
+    // width: "10%",
+    // order: 1,
   };
   const videoBoxRight2 = {
-    width: "10%",
-    order: 3,
+    // width: "10%",
+    // order: 3,
   };
   const [videoBoxs, setVideoBox] = useState();
   const [videoBoxIconLeft, setVideoBoxIconLeft] = useState();
@@ -343,34 +343,33 @@ export default function MiniDrawer({
   };
 
   const moveElement = (id, currentInfo) => {
-    
     setCurrentComponent(currentInfo);
     let isMoving = true;
 
     const currentdiv = document.getElementById(id);
 
-    const mouseMove = ({movementX,movementY}) => {
-      const getStyle = window.getComputedStyle(currentdiv)
-      const left = parseInt(getStyle.left)
-     
-      const top = parseInt(getStyle.top)
+    const mouseMove = ({ movementX, movementY }) => {
+      const getStyle = window.getComputedStyle(currentdiv);
+      const left = parseInt(getStyle.left);
+
+      const top = parseInt(getStyle.top);
 
       if (isMoving) {
-        currentdiv.style.left = `${left + movementX}px`
-        currentdiv.style.top = `${top + movementY}px`
+        currentdiv.style.left = `${left + movementX}px`;
+        currentdiv.style.top = `${top + movementY}px`;
       }
-    }
+    };
     const mouseUp = (e) => {
       isMoving = false;
 
-      window.removeEventListener('mousemove', mouseMove);
-      window.removeEventListener('mouseup', mouseUp);
+      window.removeEventListener("mousemove", mouseMove);
+      window.removeEventListener("mouseup", mouseUp);
       setLeft(parseInt(currentdiv.style.left));
       setTop(parseInt(currentdiv.style.top));
-    }
+    };
 
-    window.addEventListener('mousemove', mouseMove);
-    window.addEventListener('mouseup', mouseUp);
+    window.addEventListener("mousemove", mouseMove);
+    window.addEventListener("mouseup", mouseUp);
   };
 
   const resizeElement = (id, currentInfo) => {
@@ -379,29 +378,30 @@ export default function MiniDrawer({
 
     const currentdiv = document.getElementById(id);
 
-    const mouseMove = ({movementX,movementY}) => {
-      const getStyle = window.getComputedStyle(currentdiv)
-      const width = parseInt(getStyle.width)
-     
-      const height = parseInt(getStyle.height)
+    const mouseMove = ({ movementX, movementY }) => {
+      const getStyle = window.getComputedStyle(currentdiv);
+
+      const width = parseInt(getStyle.width);
+      const height = parseInt(getStyle.height);
 
       if (isMoving) {
-        currentdiv.style.width = `${width + movementX}px`
-        currentdiv.style.height = `${height + movementY}px`
+        currentdiv.style.width = `${width + movementX}px`;
+        currentdiv.style.height = `${height + movementY}px`;
       }
-    }
+    };
     const mouseUp = (e) => {
       isMoving = false;
 
-      window.removeEventListener('mousemove', mouseMove);
-      window.removeEventListener('mouseup', mouseUp);
-      setwidth(parseInt(currentdiv.style.width));
+      window.removeEventListener("mousemove", mouseMove);
+      window.removeEventListener("mouseup", mouseUp);
+      setWidth(parseInt(currentdiv.style.width));
       setHeight(parseInt(currentdiv.style.height));
-    }
+    };
 
-    window.addEventListener('mousemove', mouseMove);
-    window.addEventListener('mouseup', mouseUp);
+    window.addEventListener("mousemove", mouseMove);
+    window.addEventListener("mouseup", mouseUp);
   };
+
   const rotateElement = (id, cinfo) => {
     console.log(cinfo);
   };
@@ -418,13 +418,13 @@ export default function MiniDrawer({
       name: name,
       type,
       left: 20,
-      top: 50,
+      top: 20,
       opacity: 1,
       width: 150,
       height: 100,
       rotate,
       z_index: 2,
-      color: "#ccc",
+      color: "#000000",
       borderRadius: 100,
       setCurrentComponent: (a) => setCurrentComponent(a),
       moveElement,
@@ -441,6 +441,11 @@ export default function MiniDrawer({
 
       const temp = components.filter((c) => c.id !== current_component.id);
 
+      if (current_component.name !== "text") {
+        components[index].width = width || current_component.width;
+        components[index].height = height || current_component.height;
+      }
+
       if (current_component.name === "main_frame" && image) {
         components[index].image = image || current_component.image;
       }
@@ -451,8 +456,15 @@ export default function MiniDrawer({
         components[index].top = top || current_component.top;
       }
       setComponents([...temp, components[index]]);
+
+      setWidth("");
+      setHeight("");
+      setTop("");
+      setLeft("");
+      // setColor('')
+      // setImage('')
     }
-  }, [color, image,left,top]);
+  }, [color, image, left, top, width, height]);
 
   return (
     <Box>
@@ -585,12 +597,18 @@ export default function MiniDrawer({
             />
           </Box>
         </Drawer>
-
-        <Box className="main_content">
-          <Box className="video_content" style={videoBoxs}>
-            <Box className="left_video_icon_box" style={videoBoxIconLeft}>
-              <LayersIcon sx={{ fontSize: "20px", color: "#121A5E" }} />
-            </Box>
+        <Box
+          sx={{
+            width: "100%",
+            height: "90vh",
+            background: "#676363",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <Box className="main_content">
             {components.map((c, i) => (
               <CurrentComponent
                 componentColor={color}
@@ -602,10 +620,8 @@ export default function MiniDrawer({
                 videoBoxColor={videoBoxColor}
               />
             ))}
-            <Box className="right_video_icon_box" style={videoBoxIconRight}>
-              <FullscreenIcon sx={{ fontSize: "20px", color: "#121A5E" }} />
-            </Box>
           </Box>
+
           <Box
             sx={{
               width: "100%",
@@ -653,21 +669,43 @@ export default function MiniDrawer({
             sx={{
               height: "30px",
               width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
               bgcolor: "#6874dd",
               padding: "5px",
+              margin: "10px",
             }}
           >
-            <Typography
-              variant="span"
-              sx={{ color: "#fff", fontSize: "14px", fontWeight: "bold" }}
+            <Box>
+              <Typography
+                variant="span"
+                sx={{ color: "#fff", fontSize: "14px", fontWeight: "bold" }}
+              >
+                {" "}
+                Layout{" "}
+              </Typography>{" "}
+              <Typography
+                variant="span"
+                sx={{ color: "#fff", fontSize: "14px" }}
+              >
+                {" "}
+                "Untitled 2025-02-01 12:43:21"
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "10px",
+              }}
             >
-              {" "}
-              Layout{" "}
-            </Typography>{" "}
-            <Typography variant="span" sx={{ color: "#fff", fontSize: "14px" }}>
-              {" "}
-              "Untitled 2025-02-01 12:43:21"
-            </Typography>
+              <Box className="">
+                <LayersIcon sx={{ fontSize: "20px", color: "#fff" }} />
+              </Box>
+              <Box className="">
+                <FullscreenIcon sx={{ fontSize: "20px", color: "#fff" }} />
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>

@@ -23,9 +23,9 @@ import DraggableText from "./drop/DraggableText";
 function RightComponent({
   color,
   hexColor,
-  showPicker,
-  showSketchPicker,
-  handleColorChange,
+  setHexColor,
+  setColor,
+  remove_background
 }) {
   const [activeDiv, setActiveDiv] = useState(1);
 
@@ -97,7 +97,7 @@ function RightComponent({
               {" "}
               Background Color
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
@@ -111,7 +111,7 @@ function RightComponent({
                 style={{
                   width: "40px",
                   height: "40px",
-                  backgroundColor: color,
+                  backgroundColor: colors,
                 }}
               ></Box>
               <Box>
@@ -119,13 +119,49 @@ function RightComponent({
                   {hexColor}
                 </Typography>
               </Box>
-            </Box>
-            {showPicker && (
+            </Box> */}
+             <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: "0px",
+                      border: "1px solid #ccc",
+                    }}
+                  >
+                    <label
+                      className="w-[40px] h-[40px] cursor-pointer"
+                      style={{
+                        backgroundColor: color,
+                        // border:'1px solid #ddd'
+                      }}
+                      htmlFor="color"
+                    ></label>
+                    <input
+                      onChange={(e) => {
+                        setColor(e.target.value);
+                        setHexColor(e.target.value);
+                      }}
+                      type="color"
+                      className="invisible"
+                      id="color"
+                    />
+                    <Box>
+                      <Typography
+                        sx={{ fontSize: "14px", textAlign: "center" }}
+                      >
+                        {hexColor}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+            {/* {showPicker && (
               <SketchPicker
                 color={color}
                 onChangeComplete={handleColorChange} // Trigger when the color is fully selected
               />
-            )}
+            )} */}
           </Box>
 
           <Box marginTop={1}>
@@ -159,6 +195,7 @@ function RightComponent({
               <input type="file" hidden />
             </Button>
             <Button
+            onClick={remove_background}
               className="remove_button"
               sx={{ textTransform: "capitalize" }}
               ariant="contained"

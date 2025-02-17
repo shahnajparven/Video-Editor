@@ -12,13 +12,12 @@ import { SketchPicker } from "react-color";
 // import GrapesEditor from './drop/GrapesEditor';
 
 function Home() {
-  const [mainColor, setMainColor] = useState("#000000");
-  const [color, setColor] = useState("black");
+  const [mainColor, setMainColor] = useState("");
+  const [color, setColor] = useState("#000000");
   const [hexColor, setHexColor] = useState("#000000");
   const [showPicker, setShowPicker] = useState(false);
   const [current_component, setCurrentComponent] = useState("");
   const [image, setImage] = useState("");
-
 
   const handleColorChange = (mainColor) => {
     setMainColor(mainColor.hex);
@@ -27,7 +26,6 @@ function Home() {
   const showSketchPicker = () => {
     setShowPicker(!showPicker);
   };
-
 
   const [components, setComponents] = useState([
     {
@@ -43,14 +41,13 @@ function Home() {
     },
   ]);
 
-  const remove_background = ()=>{
-    const com = components.find(c=> c.id ===current_component.id)
-    const temp = components.filter(c=> c.id !==current_component.id)
-    com.image = ''
-    setImage("")
-    setComponents([...temp,com])
-    
-    }
+  const remove_background = () => {
+    const com = components.find((c) => c.id === current_component.id);
+    const temp = components.filter((c) => c.id !== current_component.id);
+    com.image = "";
+    setImage("");
+    setComponents([...temp, com]);
+  };
   return (
     <DnDProvider>
       <Header />
@@ -64,10 +61,11 @@ function Home() {
       >
         <Box width={"75%"}>
           <Dashboard
-          image={image}
-          setImage={setImage}
-          remove_background={remove_background}
-          color={color}
+            image={image}
+            setImage={setImage}
+            remove_background={remove_background}
+            color={color}
+            setColor={setColor}
             videoBoxColor={mainColor}
             current_component={current_component}
             setCurrentComponent={setCurrentComponent}
@@ -75,103 +73,131 @@ function Home() {
             setComponents={setComponents}
           />
         </Box>
-        {current_component ? (
-          <Box width={"25%"}>
-            {/* <div className="my-5 flex gap-4 justify-start items-start">
-              <span>Color</span>
-              <label
-                className="w-[30px] h-[30px] cursor-pointer rounded-sm"
-                style={{
-                  background: `${
-                    current_component.color &&
-                    current_component.color !== "#fff"
-                      ? current_component.color
-                      : "gray"
-                  }`,
-                }}
-                htmlFor="color"
-              ></label>
-              <input
-                onChange={(e) => setColor(e.target.value)}
-                type="color"
-                className="invisible"
-                id="color"
+        <Box width={"25%"}>
+          {current_component ? (
+            current_component.name === "main_frame" ? (
+              <RightComponent
+                color={color}
+                setColor={setColor}
+                hexColor={hexColor}
+                setHexColor={setHexColor}
+                showSketchPicker={showSketchPicker}
+                handleColorChange={handleColorChange}
+                showPicker={showPicker}
+                remove_background={remove_background}
               />
-            </div> */}
-              <Box className="p-5">
-            
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                gap: "0px",
-                border: "1px solid #ccc",
-              }}
-            >
-              {/* <Box
-                onClick={showSketchPicker}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  backgroundColor: color,
-                }}
-              ></Box> */}
-              {/* <Box>
-                <Typography sx={{ fontSize: "14px", textAlign: "center" }}>
-                  hdfhd
-                </Typography>
-              </Box> */}
-            {/* <Box> */}
-            <label
-                className="w-[40px] h-[40px] cursor-pointer"
-                style={{
-                  // background: `${
-                  //   current_component.color &&
-                  //   current_component.color !== "#fff"
-                  //     ? current_component.color
-                  //     : "gray"
-                  // }`,
-                  backgroundColor: color,
-                }}
-                htmlFor="color"
-              ></label>
-              <input
-                onChange={(e) => {setColor(e.target.value)
-                  setHexColor(e.target.value)
-                }}
-                type="color"
-                className="invisible"
-                id="color"
-              />
-              {/* </Box> */}
+            ) : current_component.type === "rectangle" ? (
               <Box>
-                <Typography sx={{ fontSize: "14px", textAlign: "center" }} >
-                  {hexColor}
-                </Typography>
-              </Box> 
+                <Box className="p-5">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: "0px",
+                      border: "1px solid #ccc",
+                    }}
+                  >
+                    <label
+                      className="w-[40px] h-[40px] cursor-pointer"
+                      style={{
+                        backgroundColor: color,
+                         border:'1px solid #ccc'
+                      }}
+                      htmlFor="color"
+                    ></label>
+                    <input
+                      onChange={(e) => {
+                        setColor(e.target.value);
+                        setHexColor(e.target.value);
+                      }}
+                      type="color"
+                      className="invisible"
+                      id="color"
+                    />
+                    <Box>
+                      <Typography
+                        sx={{ fontSize: "14px", textAlign: "center" }}
+                      >
+                        {hexColor}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                {current_component.name == "main_frame" && image && (
+                  <div>
+                    <button onClick={remove_background}>
+                      Remove background
+                    </button>
+                  </div>
+                )}
               </Box>
-          </Box>
-            {
-              (current_component.name =='main_frame' && image) && <div>
-                <button onClick={remove_background}>Remove background</button>
-              </div>
-            }
-          </Box>
-        ) : (
-          <Box width={"25%"}>
+            ) : current_component.type === "circle" ? (
+              <Box>
+                {/* Circle Component */}
+
+                <Box>
+                <Box className="p-5">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: "0px",
+                      border: "1px solid #ccc",
+                    }}
+                  >
+                    <label
+                      className="w-[40px] h-[40px] cursor-pointer"
+                      style={{
+                        backgroundColor: color,
+                         border:'1px solid #ccc'
+                      }}
+                      htmlFor="color"
+                    ></label>
+                    <input
+                      onChange={(e) => {
+                        setColor(e.target.value);
+                        setHexColor(e.target.value);
+                      }}
+                      type="color"
+                      className="invisible"
+                      id="color"
+                    />
+                    <Box>
+                      <Typography
+                        sx={{ fontSize: "14px", textAlign: "center" }}
+                      >
+                        {hexColor}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                {current_component.name == "main_frame" && image && (
+                  <div>
+                    <button onClick={remove_background}>
+                      Remove background
+                    </button>
+                  </div>
+                )}
+              </Box>
+                circle
+              </Box>
+            ) : (
+              <Box>default</Box>
+            )
+          ) : (
+            // Initial state when current_component is not set
             <RightComponent
-              color={mainColor}
+              colors={mainColor}
               hexColor={hexColor}
               showSketchPicker={showSketchPicker}
               handleColorChange={handleColorChange}
               showPicker={showPicker}
             />
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
-
-      {/* <Test /> */}
     </DnDProvider>
   );
 }

@@ -6187,6 +6187,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,set
                   </Grid>
                   <Grid item xs={6}>
                     <Box
+                     onClick={()=>createShape('shape','line')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}
@@ -6309,6 +6310,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,set
                   </Grid>
                   <Grid item xs={6}>
                     <Box
+                    onClick={()=>createShape('shape','pentagon')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}
@@ -6331,6 +6333,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,set
                   </Grid>
                   <Grid item xs={6}>
                     <Box
+                     onClick={()=>createShape('shape','hexagon')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}

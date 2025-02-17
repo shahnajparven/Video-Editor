@@ -111,10 +111,7 @@ const CurrentComponent = ({
   info,
   current_component,
   removeComponent,
-
   videocontents,
-  videoBoxColor,
-  componentColor,
 }) => {
   const randValue = Math.floor(Math.random() * 100 + 1);
   let html = "";
@@ -129,7 +126,6 @@ const CurrentComponent = ({
           ...videocontents,
           height: info.height + "px",
           width: info.width + "px",
-          // background: videoBoxColor,
           background: info.color,
           zIndex: info.z_index,
           image: info.image,
@@ -138,6 +134,8 @@ const CurrentComponent = ({
       ></Box>
     );
   }
+
+ 
 
   if (info.name === "shape" && info.type === "rectangle") {
     html = (
@@ -259,6 +257,109 @@ const CurrentComponent = ({
             width: info.width + "px",
             background: info.color,
             opacity: info.opacity,
+          }}
+        >
+          {current_component.id === info.id && (
+            <div onClick={() => removeComponent(info.id)}>
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
+            </div>
+          )}
+        </Box>
+      </Box>
+    );
+  }
+  if (info.name === "shape" && info.type === "pentagon") {
+    html = (
+      <Box
+        id={randValue}
+        onClick={() => info.setCurrentComponent(info)}
+        style={{
+          left: info.left + "px",
+          top: info.top + "px",
+
+          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          zIndex: info.z_index,
+        }}
+        className="absolute group hover:border-[2px] hover:border-indigo-500"
+      >
+        <Element id={randValue} info={info} exId={`${randValue}p`} />
+        {current_component.id === info.id && (
+          <div onClick={() => removeComponent(info.id)}>
+            <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
+          </div>
+        )}
+        <Box
+          id={`${randValue}p`}
+          style={{
+            height: info.width + "px",
+            width: info.width + "px",
+            background: info.color,
+            opacity: info.opacity,
+            clipPath: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)",
+          }}
+        ></Box>
+      </Box>
+    );
+  }
+  if (info.name === "shape" && info.type === "hexagon") {
+    html = (
+      <Box
+        id={randValue}
+        onClick={() => info.setCurrentComponent(info)}
+        style={{
+          left: info.left + "px",
+          top: info.top + "px",
+
+          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          zIndex: info.z_index,
+        }}
+        className="absolute group hover:border-[2px] hover:border-indigo-500"
+      >
+        <Element id={randValue} info={info} exId={`${randValue}h`} />
+        {current_component.id === info.id && (
+          <div onClick={() => removeComponent(info.id)}>
+            <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
+          </div>
+        )}
+        <Box
+          id={`${randValue}h`}
+          style={{
+            height: info.width + "px",
+            width: info.width + "px",
+            background: info.color,
+            opacity: info.opacity,
+            clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
+          }}
+        ></Box>
+      </Box>
+    );
+  }
+ 
+  if (info.name === "shape" && info.type === "line") {
+    html = (
+      <Box
+        id={randValue}
+        onClick={() => info.setCurrentComponent(info)}
+        style={{
+          left: info.left + "px",
+          top: info.top + "px",
+          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          zIndex: info.z_index,
+        }}
+        className="absolute group hover:border-[2px] hover:border-indigo-500"
+      >
+        <Element id={randValue} info={info} exId={`${randValue}l`} />
+        <Box
+          id={`${randValue}l`}
+          style={{
+            height: info.height + "px",
+            width: info.width + "px",
+            background: info.color,
+            opacity: info.opacity,
+            left: info.left + "px",
+            top: info.top + "px",
+            Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+            zIndex: info.z_index,
           }}
         >
           {current_component.id === info.id && (

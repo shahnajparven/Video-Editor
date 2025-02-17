@@ -21,7 +21,7 @@ const Element = ({ id, info, exId }) => {
       
       
       }
-       <Box onMouseDown={()=>info.rotateElement(exId,info)} className="hidden group-hover:block absolute -top-[3px] -left-[3px] w-[10px] h-[10px] cursor-nwse-resize bg-[#1068d2] z-[99999]"></Box>
+       <Box onMouseDown={()=>info.rotateElement(id,info)} className="hidden group-hover:block absolute -top-[3px] -left-[3px] w-[10px] h-[10px] cursor-nwse-resize bg-[#1068d2] z-[99999]"></Box>
     
     
       <Box onMouseDown={()=>info.moveElement(id,info)} className="hidden group-hover:block absolute -top-[3px] left-[50%] translate-[-50%,0%] w-[8px] h-[8px] cursor-nwse-resize bg-[#1068d2] z-[99999]"></Box>
