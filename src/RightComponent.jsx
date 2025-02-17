@@ -1,7 +1,4 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
   Button,
   Checkbox,
@@ -214,9 +211,7 @@ function RightComponent({
             >
               {" "}
               Resolution
-            </Typography>
-            {/* <Box className='right_part_input'><input type="text"/></Box> */}
-
+            </Typography>           
             <Box className="accordian">
               <Box className="w-72 mx-auto my-2">
                 <Select

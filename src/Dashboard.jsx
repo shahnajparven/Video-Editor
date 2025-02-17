@@ -407,8 +407,10 @@ export default function MiniDrawer({
   };
 
   const removeComponent = (id) => {
+    // const id = info.id 
     const temp = components.filter((c) => c.id !== id);
-    setCurrentComponent("");
+    setCurrentComponent(temp);
+    
     setComponents(temp);
   };
 

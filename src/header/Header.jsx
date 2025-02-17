@@ -16,7 +16,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MenuIcon from "@mui/icons-material/Menu";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -30,6 +29,10 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import zIndex from "@mui/material/styles/zIndex";
+import Select from "react-select";
+import { useState } from "react";
+
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -60,6 +63,16 @@ export const Header = () => {
   const [modal, setModal] = React.useState(false);
   const modalOpen = () => setModal(true);
   const modalClose = () => setModal(false);
+
+
+   const options= [
+      { value: "default", label: "Default Layout" },
+      { value: "layout1", label: "Untitled 2025-02-01 01:29:28" },
+      { value: "layout2", label: "Untitled 2025-02-01 12:43:21" },
+      { value: "layout3", label: "Untitled 2025-02-01 21:14:13" },
+    ]; 
+  
+    const [selectedOption, setSelectedOption] = useState(null);
   return (
     <>
       <Modal
@@ -428,16 +441,47 @@ export const Header = () => {
               gap: "10px",
             }}
           >
-            <Box
-              sx={{
-                width: "50%",
-                display: "flex",
-                alignItems: "center",
-                textAlign: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Box className="accordian">
+            
+               <Box className="accordian">
+              <Box className="w-72 mx-auto">
+                <Select
+                  options={options}
+                  value={selectedOption}
+                  onChange={setSelectedOption}
+                  placeholder="Untitled 2025-02-01 12:43:21"
+                  isSearchable
+
+                  styles={{
+                    menu: (provided) => ({
+                      ...provided,
+                      zIndex: 9999,
+                      justifyContent:'flex-start'
+                    }),
+                    placeholder: (provided) => ({
+                      ...provided,
+                      fontSize: "14px", 
+                      color: "#888", 
+                    }),
+                    singleValue: (provided) => ({
+                      ...provided,
+                      fontSize: "14px",
+                    }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      fontSize: "14px", 
+                      backgroundColor: state.isSelected ? "#f0f0f0" : "#fff", 
+                      color: state.isSelected ? "#333" : "#000", 
+                      textAlign: "left",
+                    }),
+                    control: (provided) => ({
+                      ...provided,
+                      fontSize: "14px", 
+                    }),
+                  }}
+                />
+              </Box>
+            </Box>
+              {/* <Box className="accordian">
                 <Accordion className="accordian_summary">
                   <AccordionSummary
                     expandIcon={<ArrowDropDownIcon />}
@@ -478,8 +522,8 @@ export const Header = () => {
                     <Box class="select_list">Untitled 2025-02-03 12:43:29</Box>
                   </AccordionDetails>
                 </Accordion>
-              </Box>
-            </Box>
+              </Box> */}
+           
             <Tooltip title="Options">
               <IconButton sx={{ minWidth: 20 }}>
                 <MenuIcon sx={{ color: "#fff" }} />

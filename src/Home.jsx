@@ -7,6 +7,8 @@ import { useState } from "react";
 import DnDProvider from "./drop/DnDProvider";
 import Test from "./drop/GrapesEditor";
 import { SketchPicker } from "react-color";
+import Rectangle from "./components/Rectangle";
+
 // import ClockContainer from './drop/GrapesEditor';
 
 // import GrapesEditor from './drop/GrapesEditor';
@@ -88,49 +90,7 @@ function Home() {
               />
             ) : current_component.type === "rectangle" ? (
               <Box>
-                <Box className="p-5">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      gap: "0px",
-                      border: "1px solid #ccc",
-                    }}
-                  >
-                    <label
-                      className="w-[40px] h-[40px] cursor-pointer"
-                      style={{
-                        backgroundColor: color,
-                         border:'1px solid #ccc'
-                      }}
-                      htmlFor="color"
-                    ></label>
-                    <input
-                      onChange={(e) => {
-                        setColor(e.target.value);
-                        setHexColor(e.target.value);
-                      }}
-                      type="color"
-                      className="invisible"
-                      id="color"
-                    />
-                    <Box>
-                      <Typography
-                        sx={{ fontSize: "14px", textAlign: "center" }}
-                      >
-                        {hexColor}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                {current_component.name == "main_frame" && image && (
-                  <div>
-                    <button onClick={remove_background}>
-                      Remove background
-                    </button>
-                  </div>
-                )}
+                <Rectangle color={color} setHexColor={setHexColor} setColor={setColor} hexColor={hexColor} current_component={current_component}/>
               </Box>
             ) : current_component.type === "circle" ? (
               <Box>
