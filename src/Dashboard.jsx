@@ -102,6 +102,10 @@ export default function MiniDrawer({
 
   const [rotate, setRotate] = useState(0);
 
+  const [font, setFont] = useState("");
+  const [weight, setWeight] = useState("");
+  const [padding, setPadding] = useState("");
+
   const videoBox = {
     // flexDirection: "column",
   };
@@ -402,15 +406,49 @@ export default function MiniDrawer({
     window.addEventListener("mouseup", mouseUp);
   };
 
-  const rotateElement = (id, cinfo) => {
-    console.log(cinfo);
+  const rotateElement = (id, currentInfo) => {
+    setCurrentComponent("");
+    setCurrentComponent(currentInfo);
+
+    const target = document.getElementById(id);
+
+    const mouseMove = ({ movementX, movementY }) => {
+      const getStyle = window.getComputedStyle(target);
+
+      const trans = getStyle.transform;
+      const values = trans.split("(")[1].split(")")[0].split(",");
+      const angel = Math.round(
+        Math.atan2(values[1], values[0]) * (180 / Math.PI)
+      );
+      let deg = angel < 0 ? angel + 360 : angel;
+      if (movementX) {
+        deg = deg + movementX;
+      }
+      target.style.transform = `rotate(${deg}deg)`;
+    };
+    const mouseUp = (e) => {
+      window.removeEventListener("mousemove", mouseMove);
+      window.removeEventListener("mouseup", mouseUp);
+      const getStyle = window.getComputedStyle(target);
+
+      const trans = getStyle.transform;
+      const values = trans.split("(")[1].split(")")[0].split(",");
+      const angel = Math.round(
+        Math.atan2(values[1], values[0]) * (180 / Math.PI)
+      );
+      let deg = angel < 0 ? angel + 360 : angel;
+      setRotate(deg);
+    };
+
+    window.addEventListener("mousemove", mouseMove);
+    window.addEventListener("mouseup", mouseUp);
   };
 
   const removeComponent = (id) => {
-    // const id = info.id 
+    // const id = info.id
     const temp = components.filter((c) => c.id !== id);
     setCurrentComponent(temp);
-    
+
     setComponents(temp);
   };
 
@@ -432,10 +470,36 @@ export default function MiniDrawer({
       moveElement,
       resizeElement,
       rotateElement,
-      remove_background: () => setImage(""),
     };
     setComponents([...components, style]);
   };
+
+  const add_text=(name,type)=>{
+    const style = {
+      id: components.length + 1,
+      name: name,
+      type,
+      left: 20,
+      top: 20,
+      opacity: 1,
+      padding:6,
+      font:20,
+      weight:400,
+      rotate,
+      z_index: 10,
+      title:'Add Text',
+      color: "#000000",
+      setCurrentComponent: (a) => setCurrentComponent(a),
+      moveElement,
+      resizeElement,
+      rotateElement,
+    };
+
+    setWeight('')
+    setFont('')
+    setComponents([...components, style]);
+    setCurrentComponent(style)
+  }
 
   useEffect(() => {
     if (current_component) {
@@ -446,6 +510,7 @@ export default function MiniDrawer({
       if (current_component.name !== "text") {
         components[index].width = width || current_component.width;
         components[index].height = height || current_component.height;
+        components[index].rotate = rotate || current_component.rotate;
       }
 
       if (current_component.name === "main_frame" && image) {
@@ -459,11 +524,14 @@ export default function MiniDrawer({
       }
       setComponents([...temp, components[index]]);
 
+
+      setColor('')
       setWidth("");
       setHeight("");
       setTop("");
       setLeft("");
-      // setColor('')
+      setRotate(0);
+      
       // setImage('')
     }
   }, [color, image, left, top, width, height]);
@@ -596,6 +664,7 @@ export default function MiniDrawer({
               createShape={createShape}
               activeContent={activeContent}
               handleDrawerClose={handleDrawerClose}
+              add_text={add_text}
             />
           </Box>
         </Drawer>

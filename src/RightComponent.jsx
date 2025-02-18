@@ -18,11 +18,12 @@ import DraggableText from "./drop/DraggableText";
 
 
 function RightComponent({
-  color,
+  // color,
   hexColor,
   setHexColor,
   setColor,
-  remove_background
+  remove_background,
+  current_component
 }) {
   const [activeDiv, setActiveDiv] = useState(1);
 
@@ -128,10 +129,10 @@ function RightComponent({
                     }}
                   >
                     <label
-                      className="w-[40px] h-[40px] cursor-pointer"
+                      className="w-[40px] h-[40px] cursor-pointer"                     
                       style={{
-                        backgroundColor: color,
-                        // border:'1px solid #ddd'
+                        background: `${current_component.color && current_component.color !== '#fff' ? current_component.color : 'gray'}`
+                      
                       }}
                       htmlFor="color"
                     ></label>

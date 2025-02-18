@@ -65,7 +65,7 @@ import { useDrag, useDrop } from "react-dnd";
 
 
 
-export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,setImage }) => {
+export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,setImage,add_text }) => {
   const [open, setOpen] = useState();
   const [activeDiv, setActiveDiv] = useState();
 
@@ -6142,7 +6142,8 @@ export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,set
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
                     <Box
-                    ref={dragTextRef} sx={{ opacity: isDraggingText ? 0.5 : 1 }}
+                    // ref={dragTextRef} sx={{ opacity: isDraggingText ? 0.5 : 1 }}
+                    onClick={()=>add_text('text','title')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}

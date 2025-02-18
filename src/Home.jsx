@@ -15,7 +15,7 @@ import Rectangle from "./components/Rectangle";
 
 function Home() {
   const [mainColor, setMainColor] = useState("");
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState("");
   const [hexColor, setHexColor] = useState("#000000");
   const [showPicker, setShowPicker] = useState(false);
   const [current_component, setCurrentComponent] = useState("");
@@ -79,7 +79,7 @@ function Home() {
           {current_component ? (
             current_component.name === "main_frame" ? (
               <RightComponent
-                color={color}
+                // color={color}
                 setColor={setColor}
                 hexColor={hexColor}
                 setHexColor={setHexColor}
@@ -87,61 +87,101 @@ function Home() {
                 handleColorChange={handleColorChange}
                 showPicker={showPicker}
                 remove_background={remove_background}
+                current_component={current_component}
               />
             ) : current_component.type === "rectangle" ? (
               <Box>
-                <Rectangle color={color} setHexColor={setHexColor} setColor={setColor} hexColor={hexColor} current_component={current_component}/>
+                <Rectangle
+                  color={color}
+                  setHexColor={setHexColor}
+                  setColor={setColor}
+                  hexColor={hexColor}
+                  current_component={current_component}
+                />
               </Box>
             ) : current_component.type === "circle" ? (
               <Box>
                 {/* Circle Component */}
 
-                <Box>
-                <Box className="p-5">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      gap: "0px",
-                      border: "1px solid #ccc",
-                    }}
-                  >
-                    <label
-                      className="w-[40px] h-[40px] cursor-pointer"
-                      style={{
-                        backgroundColor: color,
-                         border:'1px solid #ccc'
-                      }}
-                      htmlFor="color"
-                    ></label>
-                    <input
-                      onChange={(e) => {
-                        setColor(e.target.value);
-                        setHexColor(e.target.value);
-                      }}
-                      type="color"
-                      className="invisible"
-                      id="color"
-                    />
-                    <Box>
-                      <Typography
-                        sx={{ fontSize: "14px", textAlign: "center" }}
-                      >
-                        {hexColor}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                {current_component.name == "main_frame" && image && (
-                  <div>
-                    <button onClick={remove_background}>
-                      Remove background
-                    </button>
-                  </div>
-                )}
+                <Rectangle
+                  color={color}
+                  setHexColor={setHexColor}
+                  setColor={setColor}
+                  hexColor={hexColor}
+                  current_component={current_component}
+                />
               </Box>
-                circle
+            ) : current_component.type === "triangle" ? (
+              <Box>
+                {/* Circle Component */}
+
+                <Rectangle
+                  color={color}
+                  setHexColor={setHexColor}
+                  setColor={setColor}
+                  hexColor={hexColor}
+                  current_component={current_component}
+                />
+              </Box>
+            ) : current_component.type === "ellipse" ? (
+              <Box>
+                {/* Circle Component */}
+
+                <Rectangle
+                  color={color}
+                  setHexColor={setHexColor}
+                  setColor={setColor}
+                  hexColor={hexColor}
+                  current_component={current_component}
+                />
+              </Box>
+            ) : current_component.type === "pentagon" ? (
+              <Box>
+                {/* Circle Component */}
+
+                <Rectangle
+                  color={color}
+                  setHexColor={setHexColor}
+                  setColor={setColor}
+                  hexColor={hexColor}
+                  current_component={current_component}
+                />
+              </Box>
+            ) : current_component.type === "hexagon" ? (
+              <Box>
+                {/* Circle Component */}
+
+                <Rectangle
+                  color={color}
+                  setHexColor={setHexColor}
+                  setColor={setColor}
+                  hexColor={hexColor}
+                  current_component={current_component}
+                />
+              </Box>
+            ) : current_component.type === "line" ? (
+              <Box>
+                {/* Circle Component */}
+
+                <Rectangle
+                  color={color}
+                  setHexColor={setHexColor}
+                  setColor={setColor}
+                  hexColor={hexColor}
+                  current_component={current_component}
+                />
+              </Box>
+            ) : current_component.name === "text" ? (
+              <Box>
+                {/* Circle Component */}
+
+                <Rectangle
+                  color={color}
+                  setHexColor={setHexColor}
+                  setColor={setColor}
+                  hexColor={hexColor}
+                  current_component={current_component}
+                />
               </Box>
             ) : (
               <Box>default</Box>
@@ -149,11 +189,12 @@ function Home() {
           ) : (
             // Initial state when current_component is not set
             <RightComponent
-              colors={mainColor}
+              // color={color}
               hexColor={hexColor}
               showSketchPicker={showSketchPicker}
               handleColorChange={handleColorChange}
               showPicker={showPicker}
+              current_component={current_component}
             />
           )}
         </Box>

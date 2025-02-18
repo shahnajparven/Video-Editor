@@ -150,17 +150,18 @@ const CurrentComponent = ({
           opacity: info.opacity,
           left: info.left + "px",
           top: info.top + "px",
-          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
           zIndex: info.z_index,
         }}
         className="absolute group hover:border-[2px] hover:border-indigo-500"
       >
         <Element id={randValue} info={info} exId="" />
-        {current_component.id === info.id && (
-          <div onClick={() => removeComponent(info.id)}>
-            <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
-          </div>
-        )}
+        {current_component.id === info.id && 
+            <div onClick={() => removeComponent(info.id)}           
+            className="px-1 bg-white absolute top-0 hidden group-hover:block cursor-pointer rounded-sm">
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray", fontSize:'20px'}} />
+            </div>
+          }
       </Box>
     );
   }
@@ -174,7 +175,7 @@ const CurrentComponent = ({
           left: info.left + "px",
           top: info.top + "px",
 
-          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
           zIndex: info.z_index,
         }}
         className="absolute group hover:border-[2px] hover:border-indigo-500"
@@ -190,12 +191,14 @@ const CurrentComponent = ({
             opacity: info.opacity,
           }}
         >
-          {current_component.id === info.id && (
-            <div onClick={() => removeComponent(info.id)}>
-              <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
-            </div>
-          )}
+         
         </Box>
+        {current_component.id === info.id && 
+            <div onClick={() => removeComponent(info.id)}           
+            className="px-1 bg-white absolute top-0 hidden group-hover:block cursor-pointer rounded-sm">
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray", fontSize:'20px'}} />
+            </div>
+          }
       </Box>
     );
   }
@@ -209,17 +212,13 @@ const CurrentComponent = ({
           left: info.left + "px",
           top: info.top + "px",
 
-          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
           zIndex: info.z_index,
         }}
         className="absolute group hover:border-[2px] hover:border-indigo-500"
       >
         <Element id={randValue} info={info} exId={`${randValue}t`} />
-        {current_component.id === info.id && (
-          <div onClick={() => removeComponent(info.id)}>
-            <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
-          </div>
-        )}
+        
         <Box
           id={`${randValue}t`}
           style={{
@@ -230,6 +229,12 @@ const CurrentComponent = ({
             clipPath: "polygon(50% 0,100% 100%,0 100% )",
           }}
         ></Box>
+        {current_component.id === info.id && 
+            <div onClick={() => removeComponent(info.id)}           
+            className="px-1 bg-white absolute top-0 hidden group-hover:block cursor-pointer rounded-sm">
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray", fontSize:'20px'}} />
+            </div>
+          }
       </Box>
     );
   }
@@ -241,8 +246,7 @@ const CurrentComponent = ({
         style={{
           left: info.left + "px",
           top: info.top + "px",
-
-          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
           zIndex: info.z_index,
         }}
         className="absolute group hover:border-[2px] hover:border-indigo-500"
@@ -259,12 +263,14 @@ const CurrentComponent = ({
             opacity: info.opacity,
           }}
         >
-          {current_component.id === info.id && (
-            <div onClick={() => removeComponent(info.id)}>
-              <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
-            </div>
-          )}
+         
         </Box>
+        {current_component.id === info.id && 
+            <div onClick={() => removeComponent(info.id)}           
+            className="px-1 bg-white absolute top-0 hidden group-hover:block cursor-pointer rounded-sm">
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray", fontSize:'20px'}} />
+            </div>
+          }
       </Box>
     );
   }
@@ -277,17 +283,13 @@ const CurrentComponent = ({
           left: info.left + "px",
           top: info.top + "px",
 
-          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
           zIndex: info.z_index,
         }}
         className="absolute group hover:border-[2px] hover:border-indigo-500"
       >
         <Element id={randValue} info={info} exId={`${randValue}p`} />
-        {current_component.id === info.id && (
-          <div onClick={() => removeComponent(info.id)}>
-            <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
-          </div>
-        )}
+        
         <Box
           id={`${randValue}p`}
           style={{
@@ -298,6 +300,12 @@ const CurrentComponent = ({
             clipPath: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)",
           }}
         ></Box>
+         {current_component.id === info.id && 
+            <div onClick={() => removeComponent(info.id)}           
+            className="px-1 bg-white absolute top-0 hidden group-hover:block cursor-pointer rounded-sm">
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray", fontSize:'20px'}} />
+            </div>
+          }
       </Box>
     );
   }
@@ -310,17 +318,13 @@ const CurrentComponent = ({
           left: info.left + "px",
           top: info.top + "px",
 
-          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
           zIndex: info.z_index,
         }}
         className="absolute group hover:border-[2px] hover:border-indigo-500"
       >
         <Element id={randValue} info={info} exId={`${randValue}h`} />
-        {current_component.id === info.id && (
-          <div onClick={() => removeComponent(info.id)}>
-            <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
-          </div>
-        )}
+        
         <Box
           id={`${randValue}h`}
           style={{
@@ -331,6 +335,12 @@ const CurrentComponent = ({
             clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
           }}
         ></Box>
+         {current_component.id === info.id && 
+            <div onClick={() => removeComponent(info.id)}           
+            className="px-1 bg-white absolute top-0 hidden group-hover:block cursor-pointer rounded-sm">
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray", fontSize:'20px'}} />
+            </div>
+          }
       </Box>
     );
   }
@@ -343,7 +353,7 @@ const CurrentComponent = ({
         style={{
           left: info.left + "px",
           top: info.top + "px",
-          Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          ransform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
           zIndex: info.z_index,
         }}
         className="absolute group hover:border-[2px] hover:border-indigo-500"
@@ -358,16 +368,49 @@ const CurrentComponent = ({
             opacity: info.opacity,
             left: info.left + "px",
             top: info.top + "px",
-            Transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+            transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
             zIndex: info.z_index,
           }}
         >
-          {current_component.id === info.id && (
-            <div onClick={() => removeComponent(info.id)}>
-              <DeleteIcon sx={{ cursor: "pointer", color: "gray" }} />
+                
+        {current_component.id === info.id && 
+            <div onClick={() => removeComponent(info.id)}           
+            className="px-1 bg-white absolute top-0 hidden group-hover:block cursor-pointer rounded-sm">
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray", fontSize:'20px'}} />
             </div>
-          )}
-        </Box>
+          }
+           </Box>
+      </Box>
+    );
+  }
+
+  if (info.name === "text") {
+    html = (
+      <Box
+        id={randValue}
+        onClick={() => info.setCurrentComponent(info)}
+        style={{
+          left: info.left + "px",
+          top: info.top + "px",
+          transform: info.rotate ? `rotate(${info.rotate}deg)` : `rotate(0deg)`,
+          zIndex: info.z_index,
+          padding:info.padding+'px',
+          color: info.color,
+          opacity: info.opacity,
+          
+        }}
+        className="absolute group hover:border-[2px] hover:border-indigo-500"
+      >
+        <Element id={randValue} info={info} exId=''/>
+        {current_component.id === info.id && 
+            <div onClick={() => removeComponent(info.id)}           
+            className="px-1 bg-white absolute top-0 hidden group-hover:block cursor-pointer rounded-sm">
+              <DeleteIcon sx={{ cursor: "pointer", color: "gray", fontSize:'20px'}} />
+            </div>
+          }
+        <h2 style={{ fontSize:info.font +'px', fontWeight:info.weight}}className="w-full h-full">{info.title}</h2>
+          
+    
       </Box>
     );
   }

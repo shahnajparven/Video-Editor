@@ -104,8 +104,7 @@ const Rectangle = ({
             <label
               className="w-[40px] h-[40px] cursor-pointer"
               style={{
-                backgroundColor: color,
-                border: "1px solid #ccc",
+                background: `${current_component.color && current_component.color !== '#fff' ? current_component.color : 'gray'}`,
               }}
               htmlFor="color"
             ></label>
@@ -190,8 +189,7 @@ const Rectangle = ({
             <label
               className="w-[40px] h-[40px] cursor-pointer"
               style={{
-                backgroundColor: color,
-                border: "1px solid #ccc",
+                background: `${current_component.color && current_component.color !== '#fff' ? current_component.color : 'gray'}`,
               }}
               htmlFor="color"
             ></label>
