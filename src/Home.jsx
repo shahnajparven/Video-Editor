@@ -9,17 +9,57 @@ import Test from "./drop/GrapesEditor";
 import { SketchPicker } from "react-color";
 import Rectangle from "./components/Rectangle";
 
-// import ClockContainer from './drop/GrapesEditor';
-
-// import GrapesEditor from './drop/GrapesEditor';
-
 function Home() {
   const [mainColor, setMainColor] = useState("");
   const [color, setColor] = useState("");
+  const [outline, setOutline] = useState("");
   const [hexColor, setHexColor] = useState("#000000");
   const [showPicker, setShowPicker] = useState(false);
   const [current_component, setCurrentComponent] = useState("");
   const [image, setImage] = useState("");
+  const [opacity, setOpacity] = useState("");
+  const [outlineWidth, setOutlinewidth] = useState("");
+  const [borderRadius, setBorderRadius] = useState("");
+
+  const [top, setTop] = useState("");
+  const [left, setLeft] = useState("");
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  const [rotate, setRotate] = useState(0);
+  const [transform, setTransform] = useState(0);
+  const [lineheight, setLineheight] = useState("");
+  const [borderStyle, setBorderStyle] = useState("");
+
+  const [text, setText] = useState("");
+
+  const [font, setFont] = useState("");
+  const [weight, setWeight] = useState("");
+  const [padding, setPadding] = useState("");
+
+  const handleChangeBorderStyle = (selectedOption) => {
+    setBorderStyle(selectedOption.value);
+    setCurrentComponent({
+      ...current_component,
+      borderStyle: selectedOption.value,
+    });
+    console.log(selectedOption.value, "borderStyle");
+  };
+
+
+
+
+  const opacityHandler = (e) => {
+    setOpacity(parseFloat(e.target.value));
+  };
+
+  const outlinewidthHandler = (e) => {
+    setOutlinewidth(e.target.value);
+  };
+  const borderRadiusHandler = (e) => {
+    setBorderRadius(e.target.value);
+  };
 
   const handleColorChange = (mainColor) => {
     setMainColor(mainColor.hex);
@@ -35,7 +75,7 @@ function Home() {
       type: "react",
       id: Math.floor(Math.random() * 100 + 1),
       height: 400,
-      width: 600,
+      width: 650,
       z_index: 1,
       color: "#fff",
       image: "",
@@ -63,6 +103,7 @@ function Home() {
       >
         <Box width={"75%"}>
           <Dashboard
+            outline={outline}
             image={image}
             setImage={setImage}
             remove_background={remove_background}
@@ -73,6 +114,35 @@ function Home() {
             setCurrentComponent={setCurrentComponent}
             components={components}
             setComponents={setComponents}
+            setOpacity={setOpacity}
+            opacity={opacity}
+            setOutlinewidth={setOutlinewidth}
+            outlineWidth={outlineWidth}
+            borderRadius={borderRadius}
+            setBorderRadius={setBorderRadius}
+            setTop={setTop}
+            top={top}
+            setLeft={setLeft}
+            left={left}
+            setWidth={setWidth}
+            width={width}
+            height={height}
+            setHeight={setHeight}
+            setRotate={setRotate}
+            rotate={rotate}
+            setTransform={setTransform}
+            setLineheight={setLineheight}
+            lineheight={lineheight}
+            setBorderStyle={setBorderStyle}
+            borderStyle={borderStyle}
+            setText={setText}
+            text={text}
+            setFont={setFont}
+            setWeight={setWeight}
+            setPadding={setPadding}
+            font={font}
+            weight={weight}
+            padding={padding}
           />
         </Box>
         <Box width={"25%"}>
@@ -91,12 +161,23 @@ function Home() {
               />
             ) : current_component.type === "rectangle" ? (
               <Box>
+                {/* rectangle Component */}
                 <Rectangle
                   color={color}
                   setHexColor={setHexColor}
                   setColor={setColor}
                   hexColor={hexColor}
                   current_component={current_component}
+                  setOutline={setOutline}
+                  outline={outline}
+                  opacityHandler={opacityHandler}
+                  outlinewidthHandler={outlinewidthHandler}
+                  borderRadiusHandler={borderRadiusHandler}
+                  setTop={setTop}
+                  setLeft={setLeft}
+                  setHeight={setHeight}
+                  setWidth={setWidth}
+                  setTransform={setTransform}
                 />
               </Box>
             ) : current_component.type === "circle" ? (
@@ -109,11 +190,21 @@ function Home() {
                   setColor={setColor}
                   hexColor={hexColor}
                   current_component={current_component}
+                  setOutline={setOutline}
+                  outline={outline}
+                  opacityHandler={opacityHandler}
+                  outlinewidthHandler={outlinewidthHandler}
+                  borderRadiusHandler={borderRadiusHandler}
+                  setTop={setTop}
+                  setLeft={setLeft}
+                  setHeight={setHeight}
+                  setWidth={setWidth}
+                  setTransform={setTransform}
                 />
               </Box>
             ) : current_component.type === "triangle" ? (
               <Box>
-                {/* Circle Component */}
+                {/* triangle Component */}
 
                 <Rectangle
                   color={color}
@@ -121,11 +212,21 @@ function Home() {
                   setColor={setColor}
                   hexColor={hexColor}
                   current_component={current_component}
+                  setOutline={setOutline}
+                  outline={outline}
+                  opacityHandler={opacityHandler}
+                  outlinewidthHandler={outlinewidthHandler}
+                  borderRadiusHandler={borderRadiusHandler}
+                  setTop={setTop}
+                  setLeft={setLeft}
+                  setHeight={setHeight}
+                  setWidth={setWidth}
+                  setTransform={setTransform}
                 />
               </Box>
             ) : current_component.type === "ellipse" ? (
               <Box>
-                {/* Circle Component */}
+                {/* ellipse Component */}
 
                 <Rectangle
                   color={color}
@@ -133,11 +234,21 @@ function Home() {
                   setColor={setColor}
                   hexColor={hexColor}
                   current_component={current_component}
+                  setOutline={setOutline}
+                  outline={outline}
+                  opacityHandler={opacityHandler}
+                  outlinewidthHandler={outlinewidthHandler}
+                  borderRadiusHandler={borderRadiusHandler}
+                  setTop={setTop}
+                  setLeft={setLeft}
+                  setHeight={setHeight}
+                  setWidth={setWidth}
+                  setTransform={setTransform}
                 />
               </Box>
             ) : current_component.type === "pentagon" ? (
               <Box>
-                {/* Circle Component */}
+                {/* pentagon Component */}
 
                 <Rectangle
                   color={color}
@@ -145,11 +256,21 @@ function Home() {
                   setColor={setColor}
                   hexColor={hexColor}
                   current_component={current_component}
+                  setOutline={setOutline}
+                  outline={outline}
+                  opacityHandler={opacityHandler}
+                  outlinewidthHandler={outlinewidthHandler}
+                  borderRadiusHandler={borderRadiusHandler}
+                  setTop={setTop}
+                  setLeft={setLeft}
+                  setHeight={setHeight}
+                  setWidth={setWidth}
+                  setTransform={setTransform}
                 />
               </Box>
             ) : current_component.type === "hexagon" ? (
               <Box>
-                {/* Circle Component */}
+                {/* hexagon Component */}
 
                 <Rectangle
                   color={color}
@@ -157,11 +278,21 @@ function Home() {
                   setColor={setColor}
                   hexColor={hexColor}
                   current_component={current_component}
+                  setOutline={setOutline}
+                  outline={outline}
+                  opacityHandler={opacityHandler}
+                  outlinewidthHandler={outlinewidthHandler}
+                  borderRadiusHandler={borderRadiusHandler}
+                  setTop={setTop}
+                  setLeft={setLeft}
+                  setHeight={setHeight}
+                  setWidth={setWidth}
+                  setTransform={setTransform}
                 />
               </Box>
             ) : current_component.type === "line" ? (
               <Box>
-                {/* Circle Component */}
+                {/* line Component */}
 
                 <Rectangle
                   color={color}
@@ -169,11 +300,23 @@ function Home() {
                   setColor={setColor}
                   hexColor={hexColor}
                   current_component={current_component}
+                  setOutline={setOutline}
+                  outline={outline}
+                  opacityHandler={opacityHandler}
+                  outlinewidthHandler={outlinewidthHandler}
+                  borderRadiusHandler={borderRadiusHandler}
+                  setTop={setTop}
+                  setLeft={setLeft}
+                  setHeight={setHeight}
+                  setWidth={setWidth}
+                  setTransform={setTransform}
+                  setLineheight={setLineheight}
+                  handleChangeBorderStyle={handleChangeBorderStyle}
                 />
               </Box>
             ) : current_component.name === "text" ? (
               <Box>
-                {/* Circle Component */}
+                {/* text Component */}
 
                 <Rectangle
                   color={color}
@@ -181,6 +324,32 @@ function Home() {
                   setColor={setColor}
                   hexColor={hexColor}
                   current_component={current_component}
+                  setOutline={setOutline}
+                  outline={outline}
+                  opacityHandler={opacityHandler}
+                  setCurrentComponent={setCurrentComponent}
+                  setText={setText}
+                  setFont={setFont}
+                  setWeight={setWeight}
+                />
+              </Box>
+            ) : current_component.name === "datetime" ? (
+              <Box>
+                {/* text Component */}
+
+                <Rectangle
+                   color={color}
+                   setHexColor={setHexColor}
+                   setColor={setColor}
+                   hexColor={hexColor}
+                   current_component={current_component}
+                   setOutline={setOutline}
+                   outline={outline}
+                   opacityHandler={opacityHandler}
+                   setCurrentComponent={setCurrentComponent}
+                   setText={setText}
+                   setFont={setFont}
+                   setWeight={setWeight}
                 />
               </Box>
             ) : (

@@ -65,7 +65,7 @@ import { useDrag, useDrop } from "react-dnd";
 
 
 
-export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,setImage,add_text }) => {
+export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,setImage,add_text,add_DateTime }) => {
   const [open, setOpen] = useState();
   const [activeDiv, setActiveDiv] = useState();
 
@@ -6166,6 +6166,7 @@ export const DrawerContent = ({ activeContent, handleDrawerClose,createShape,set
                   </Grid>
                   <Grid item xs={6}>
                     <Box
+                     onClick={()=>add_DateTime('datetime','date','time')}
                       border={"1px solid #ddd"}
                       padding={"8px"}
                       borderRadius={"4px"}

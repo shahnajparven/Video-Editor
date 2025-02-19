@@ -84,27 +84,46 @@ export default function MiniDrawer({
   image,
   setImage,
   color,
+  outline,
   setColor,
   videoBoxColor,
   setCurrentComponent,
   current_component,
-  components = { components },
-  setComponents = { setComponents },
+  components,
+  setComponents,
+  opacity,
+  setOpacity,
+  setOutlinewidth,
+  outlineWidth,
+  setBorderRadius,
+  borderRadius,
+  setTop,
+  top,
+  setLeft,
+  left,
+  width,
+  setWidth,
+  height,
+  setHeight,
+  rotate,
+  setRotate,
+  transform,
+  setTransform,
+  setLineheight,
+  lineheight,
+  setBorderStyle,
+  borderStyle,
+  setText,
+  text,
+  setWeight,
+  setFont,
+  setPadding,
+  font,weight,padding,
 }) {
   const [activeContent, setActiveContent] = useState("");
   const [open, setOpen] = useState(false);
 
-  const [left, setLeft] = useState("");
-  const [top, setTop] = useState("");
-
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
-
-  const [rotate, setRotate] = useState(0);
-
-  const [font, setFont] = useState("");
-  const [weight, setWeight] = useState("");
-  const [padding, setPadding] = useState("");
+ 
 
   const videoBox = {
     // flexDirection: "column",
@@ -462,10 +481,15 @@ export default function MiniDrawer({
       opacity: 1,
       width: 150,
       height: 100,
+      lineheight:2,
       rotate,
       z_index: 2,
       color: "#000000",
-      borderRadius: 100,
+      borderStyle: 'solid',
+      outlineWidth: 0, 
+      outlineStyle: "solid",
+      outline: "blue", 
+      borderRadius:0,
       setCurrentComponent: (a) => setCurrentComponent(a),
       moveElement,
       resizeElement,
@@ -487,7 +511,7 @@ export default function MiniDrawer({
       weight:400,
       rotate,
       z_index: 10,
-      title:'Add Text',
+      title:'Text',
       color: "#000000",
       setCurrentComponent: (a) => setCurrentComponent(a),
       moveElement,
@@ -500,6 +524,46 @@ export default function MiniDrawer({
     setComponents([...components, style]);
     setCurrentComponent(style)
   }
+
+
+
+
+
+  const add_DateTime=(name,type)=>{
+
+    
+    const style = {
+      id: components.length + 1,
+      name: name,
+      type,
+      left: 20,
+      top: 20,
+      opacity: 1,
+      padding:6,
+      font:20,
+      weight:400,
+      rotate,
+      z_index: 10,
+      // title: dateTime, 
+      // date: formatDate(dateTime), // Add formatted date
+      // time: formatTime(dateTime), // Add formatted time
+      color: "#000000",
+      setCurrentComponent: (a) => setCurrentComponent(a),
+      moveElement,
+      resizeElement,
+      rotateElement,
+    };
+
+    setWeight('')
+    setFont('')
+    setComponents([...components, style]);
+    setCurrentComponent(style)
+
+
+  }
+
+   
+
 
   useEffect(() => {
     if (current_component) {
@@ -517,11 +581,26 @@ export default function MiniDrawer({
         components[index].image = image || current_component.image;
       }
       components[index].color = color || current_component.color;
-
+    
+    
       if (current_component.name !== "main_frame") {
         components[index].left = left || current_component.left;
         components[index].top = top || current_component.top;
+        components[index].opacity = opacity || current_component.opacity;
+        components[index].outlineWidth = outlineWidth || current_component.outlineWidth;
+        components[index].borderRadius = borderRadius || current_component.borderRadius;
+         components[index].transform = transform || current_component.transform;
+         components[index].lineheight = lineheight || current_component.lineheight;
+         components[index].borderStyle = borderStyle || current_component.borderStyle;
+         components[index].outline = outline || current_component.outline;
       }
+      if (current_component.name === "text" ||  current_component.name === "datetime") {
+        components[index].title = text || current_component.title;
+        components[index].font = font || current_component.font;
+        components[index].weight = weight || current_component.weight;
+      }
+      
+
       setComponents([...temp, components[index]]);
 
 
@@ -531,10 +610,17 @@ export default function MiniDrawer({
       setTop("");
       setLeft("");
       setRotate(0);
-      
-      // setImage('')
+      setOpacity('')
+      setOutlinewidth('')
+      setBorderRadius('')
+      setTransform(0)
+      setLineheight('')
+      setBorderStyle('')
+      setText('')
+      setWeight('')
+  setFont('')
     }
-  }, [color, image, left, top, width, height]);
+  }, [color, outline, image, top, left, width, height, opacity,outlineWidth,borderRadius,transform,lineheight,borderStyle,text,font,weight]);
 
   return (
     <Box>
@@ -665,6 +751,7 @@ export default function MiniDrawer({
               activeContent={activeContent}
               handleDrawerClose={handleDrawerClose}
               add_text={add_text}
+              add_DateTime={add_DateTime}
             />
           </Box>
         </Drawer>
